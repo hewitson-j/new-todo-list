@@ -1,7 +1,9 @@
+import Navbar from "./Navbar";
+
 export default function AppHeader() {
   return (
     <>
-      <div>Hello World</div>
+      <Navbar />
     </>
   );
 }
