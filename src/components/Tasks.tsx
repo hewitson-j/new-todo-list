@@ -3,6 +3,7 @@ import TaskCard from "./TaskCard";
 
 export default function Tasks() {
   const props = {
+    id: "test",
     title: "Default",
     description: "This is the default text.",
     complete: true,
@@ -15,6 +16,7 @@ export default function Tasks() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -22,6 +24,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -29,6 +32,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -36,6 +40,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -43,6 +48,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -50,6 +56,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -57,6 +64,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -64,6 +72,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}
@@ -71,6 +80,7 @@ export default function Tasks() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TaskCard
+              id={props.id}
               title={props.title}
               description={props.description}
               complete={props.complete}

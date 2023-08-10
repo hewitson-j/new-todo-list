@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 interface TaskCardProps {
+  id: string;
   title: string;
   description: string;
   complete: boolean;
