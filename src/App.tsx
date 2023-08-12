@@ -1,11 +1,16 @@
+import { Container, Typography } from "@mui/material";
 import AppHeader from "./components/AppHeader";
-import Tasks from "./components/Tasks";
+import TaskList from "./components/TaskList";
 
 function App() {
   return (
     <>
       <AppHeader />
-      <Tasks />
+      <Container>
+        <br></br>
+        <Typography variant="h4">Task List:</Typography>
+        <TaskList />
+      </Container>
     </>
   );
 }
