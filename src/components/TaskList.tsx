@@ -8,9 +8,14 @@ import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
 
 export default function TaskList() {
-  let completed = false;
+  const [completed, setCompleted] = useState(false);
+
+  const handleToggle = () => {
+    setCompleted((prevCompleted) => !prevCompleted);
+  };
 
   return (
     <>
@@ -21,13 +26,7 @@ export default function TaskList() {
             const labelId = `checkbox-list-label-${value}`;
 
             return (
-              <ListItem
-                key={value}
-                disablePadding
-                onClick={() => {
-                  completed ? (completed = false) : (completed = true);
-                }}
-              >
+              <ListItem key={value} disablePadding onClick={handleToggle}>
                 <ListItemButton role={undefined} dense>
                   <ListItemIcon>
                     {!completed ? (
@@ -41,12 +40,15 @@ export default function TaskList() {
                     primary={`Line item ${value + 1}`}
                   />
                 </ListItemButton>
-                <ListItemButton sx={{ maxWidth: "10%" }} role={undefined}>
-                  <ListItemText>{"Update   "}</ListItemText> <EditIcon />
+                <ListItemButton sx={{ maxWidth: "5%" }} role={undefined}>
+                  <ListItemText>
+                    <EditIcon />
+                  </ListItemText>
                 </ListItemButton>
-                <ListItemButton sx={{ maxWidth: "10%" }} role={undefined}>
-                  <ListItemText>Delete</ListItemText>
-                  <DeleteIcon />
+                <ListItemButton sx={{ maxWidth: "5%" }} role={undefined}>
+                  <ListItemText>
+                    <DeleteIcon />
+                  </ListItemText>
                 </ListItemButton>
               </ListItem>
             );
