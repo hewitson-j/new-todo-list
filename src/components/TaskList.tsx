@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export default function TaskList() {
   const [completedItems, setCompletedItems] = useState(
-    new Array(4).fill(false) // Initialize with false for 4 items
+    new Array(4).fill(false)
   );
 
   const handleToggle = (index: number) => {
@@ -52,12 +52,24 @@ export default function TaskList() {
                     primary={`Line item ${value + 1}`}
                   />
                 </ListItemButton>
-                <ListItemButton sx={{ maxWidth: "5%" }} role={undefined}>
+                <ListItemButton
+                  sx={{ maxWidth: "5%" }}
+                  role={undefined}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the click event from reaching the ListItem
+                  }}
+                >
                   <ListItemText>
                     <EditIcon />
                   </ListItemText>
                 </ListItemButton>
-                <ListItemButton sx={{ maxWidth: "5%" }} role={undefined}>
+                <ListItemButton
+                  sx={{ maxWidth: "5%" }}
+                  role={undefined}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the click event from reaching the ListItem
+                  }}
+                >
                   <ListItemText>
                     <DeleteIcon />
                   </ListItemText>
