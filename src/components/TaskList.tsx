@@ -11,10 +11,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
 export default function TaskList() {
-  const [completed, setCompleted] = useState(false);
+  const [completedItems, setCompletedItems] = useState(
+    new Array(4).fill(false) // Initialize with false for 4 items
+  );
 
-  const handleToggle = () => {
-    setCompleted((prevCompleted) => !prevCompleted);
+  const handleToggle = (index: number) => {
+    setCompletedItems((prevCompletedItems) => {
+      const newCompletedItems = [...prevCompletedItems];
+      newCompletedItems[index] = !newCompletedItems[index]; // Toggle the completion status
+      return newCompletedItems;
+    });
   };
 
   return (
@@ -26,10 +32,16 @@ export default function TaskList() {
             const labelId = `checkbox-list-label-${value}`;
 
             return (
-              <ListItem key={value} disablePadding onClick={handleToggle}>
+              <ListItem
+                key={value}
+                disablePadding
+                onClick={() => {
+                  handleToggle(value);
+                }}
+              >
                 <ListItemButton role={undefined} dense>
                   <ListItemIcon>
-                    {!completed ? (
+                    {!completedItems[value] ? (
                       <CircleOutlinedIcon color="inherit" />
                     ) : (
                       <CheckCircleOutlineOutlinedIcon color="success" />
