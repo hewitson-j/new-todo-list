@@ -8,7 +8,9 @@ import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
+import Tooltip from "@mui/material/Tooltip/Tooltip";
 
 export default function TaskList() {
   const [completedItems, setCompletedItems] = useState(
@@ -52,28 +54,45 @@ export default function TaskList() {
                     primary={`Line item ${value + 1}`}
                   />
                 </ListItemButton>
-                <ListItemButton
-                  sx={{ maxWidth: "5%" }}
-                  role={undefined}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent the click event from reaching the ListItem
-                  }}
-                >
-                  <ListItemText>
-                    <EditIcon />
-                  </ListItemText>
-                </ListItemButton>
-                <ListItemButton
-                  sx={{ maxWidth: "5%" }}
-                  role={undefined}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent the click event from reaching the ListItem
-                  }}
-                >
-                  <ListItemText>
-                    <DeleteIcon />
-                  </ListItemText>
-                </ListItemButton>
+                <Tooltip title={"Task Info"}>
+                  <ListItemButton
+                    sx={{ maxWidth: "5%" }}
+                    role={undefined}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the click event from reaching the ListItem
+                    }}
+                  >
+                    <ListItemText>
+                      <ArrowDropDownIcon />
+                    </ListItemText>
+                  </ListItemButton>
+                </Tooltip>
+                <Tooltip title={"Edit"}>
+                  <ListItemButton
+                    sx={{ maxWidth: "5%" }}
+                    role={undefined}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the click event from reaching the ListItem
+                    }}
+                  >
+                    <ListItemText>
+                      <EditIcon />
+                    </ListItemText>
+                  </ListItemButton>
+                </Tooltip>
+                <Tooltip title={"Delete"}>
+                  <ListItemButton
+                    sx={{ maxWidth: "5%" }}
+                    role={undefined}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the click event from reaching the ListItem
+                    }}
+                  >
+                    <ListItemText>
+                      <DeleteIcon />
+                    </ListItemText>
+                  </ListItemButton>
+                </Tooltip>
               </ListItem>
             );
           })}
