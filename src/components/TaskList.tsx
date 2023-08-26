@@ -6,6 +6,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/material";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function TaskList() {
   let completed = false;
@@ -38,6 +40,13 @@ export default function TaskList() {
                     id={labelId}
                     primary={`Line item ${value + 1}`}
                   />
+                </ListItemButton>
+                <ListItemButton sx={{ maxWidth: "10%" }} role={undefined}>
+                  <ListItemText>{"Update   "}</ListItemText> <EditIcon />
+                </ListItemButton>
+                <ListItemButton sx={{ maxWidth: "10%" }} role={undefined}>
+                  <ListItemText>Delete</ListItemText>
+                  <DeleteIcon />
                 </ListItemButton>
               </ListItem>
             );

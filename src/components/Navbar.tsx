@@ -16,6 +16,7 @@ export default function Navbar() {
           </Typography>
           <IconButton color="inherit">
             <AddIcon />
+            <Typography>Add Item</Typography>
           </IconButton>
           <TaskAltIcon color="inherit" />
           <Typography>0 Completed</Typography>
