@@ -7,6 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/material";
 
 import { useState } from "react";
+import itemEntries from "./ItemEntries";
 
 // Icon Components
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
@@ -18,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip/Tooltip";
 
 export default function TaskList() {
   const [completedItems, setCompletedItems] = useState(
-    new Array(4).fill(false)
+    itemEntries.map((item) => item.completed)
   );
 
   const handleToggle = (index: number) => {
@@ -34,29 +35,27 @@ export default function TaskList() {
       <br />
       <Container>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {[0, 1, 2, 3].map((value) => {
-            const labelId = `checkbox-list-label-${value}`;
+          {itemEntries.map((item, index) => {
+            const labelId = `checkbox-list-label-${index}`;
+            const isCompleted = completedItems[index];
 
             return (
               <ListItem
-                key={value}
+                key={index}
                 disablePadding
                 onClick={() => {
-                  handleToggle(value);
+                  handleToggle(index);
                 }}
               >
                 <ListItemButton role={undefined} dense>
                   <ListItemIcon>
-                    {!completedItems[value] ? (
+                    {!isCompleted ? (
                       <CircleOutlinedIcon color="inherit" />
                     ) : (
                       <CheckCircleOutlineOutlinedIcon color="success" />
                     )}
                   </ListItemIcon>
-                  <ListItemText
-                    id={labelId}
-                    primary={`Line item ${value + 1}`}
-                  />
+                  <ListItemText id={labelId} primary={`${item.title}`} />
                 </ListItemButton>
                 <Tooltip title={"Task Info"}>
                   <ListItemButton
