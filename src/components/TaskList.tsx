@@ -8,6 +8,7 @@ import { Container } from "@mui/material";
 
 import { useState } from "react";
 import itemEntries from "./ItemEntries";
+import TaskBody from "./TaskBody";
 
 // Icon Components
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
@@ -22,11 +23,21 @@ export default function TaskList() {
     itemEntries.map((item) => item.completed)
   );
 
-  const handleToggle = (index: number) => {
+  const [openItems, setOpenItems] = useState(itemEntries.map(() => false));
+
+  const handleToggleCompleted = (index: number) => {
     setCompletedItems((prevCompletedItems) => {
       const newCompletedItems = [...prevCompletedItems];
-      newCompletedItems[index] = !newCompletedItems[index]; // Toggle the completion status
+      newCompletedItems[index] = !newCompletedItems[index];
       return newCompletedItems;
+    });
+  };
+
+  const handleToggleOpen = (index: number) => {
+    setOpenItems((prevOpenItems) => {
+      const newOpenItems = [...prevOpenItems];
+      newOpenItems[index] = !newOpenItems[index];
+      return newOpenItems;
     });
   };
 
@@ -38,65 +49,70 @@ export default function TaskList() {
           {itemEntries.map((item, index) => {
             const labelId = `checkbox-list-label-${index}`;
             const isCompleted = completedItems[index];
+            const isOpen = openItems[index];
 
             return (
-              <ListItem
-                key={index}
-                disablePadding
-                onClick={() => {
-                  handleToggle(index);
-                }}
-              >
-                <ListItemButton role={undefined} dense>
-                  <ListItemIcon>
-                    {!isCompleted ? (
-                      <CircleOutlinedIcon color="inherit" />
-                    ) : (
-                      <CheckCircleOutlineOutlinedIcon color="success" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText id={labelId} primary={`${item.title}`} />
-                </ListItemButton>
-                <Tooltip title={"Task Info"}>
-                  <ListItemButton
-                    sx={{ maxWidth: "5%" }}
-                    role={undefined}
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click event from reaching the ListItem
-                    }}
-                  >
-                    <ListItemText>
-                      <ArrowDropDownIcon />
-                    </ListItemText>
+              <div key={index}>
+                <ListItem
+                  disablePadding
+                  onClick={() => handleToggleCompleted(index)}
+                >
+                  <ListItemButton role={undefined} dense>
+                    <ListItemIcon>
+                      {!isCompleted ? (
+                        <CircleOutlinedIcon color="inherit" />
+                      ) : (
+                        <CheckCircleOutlineOutlinedIcon color="success" />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText id={labelId} primary={item.title} />
                   </ListItemButton>
-                </Tooltip>
-                <Tooltip title={"Edit"}>
-                  <ListItemButton
-                    sx={{ maxWidth: "5%" }}
-                    role={undefined}
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click event from reaching the ListItem
-                    }}
-                  >
-                    <ListItemText>
-                      <EditIcon />
-                    </ListItemText>
-                  </ListItemButton>
-                </Tooltip>
-                <Tooltip title={"Delete"}>
-                  <ListItemButton
-                    sx={{ maxWidth: "5%" }}
-                    role={undefined}
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click event from reaching the ListItem
-                    }}
-                  >
-                    <ListItemText>
-                      <DeleteIcon />
-                    </ListItemText>
-                  </ListItemButton>
-                </Tooltip>
-              </ListItem>
+                  <Tooltip title="Task Info">
+                    <ListItemButton
+                      sx={{ maxWidth: "5%" }}
+                      role={undefined}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleOpen(index); // Toggle the open state
+                      }}
+                    >
+                      <ListItemText>
+                        <ArrowDropDownIcon />
+                      </ListItemText>
+                    </ListItemButton>
+                  </Tooltip>
+                  <Tooltip title="Edit">
+                    <ListItemButton
+                      sx={{ maxWidth: "5%" }}
+                      role={undefined}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <ListItemText>
+                        <EditIcon />
+                      </ListItemText>
+                    </ListItemButton>
+                  </Tooltip>
+                  <Tooltip title="Delete">
+                    <ListItemButton
+                      sx={{ maxWidth: "5%" }}
+                      role={undefined}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <ListItemText>
+                        <DeleteIcon />
+                      </ListItemText>
+                    </ListItemButton>
+                  </Tooltip>
+                </ListItem>
+                {isOpen && (
+                  // Render additional content when isOpen is true
+                  <TaskBody body={item.body} />
+                )}
+              </div>
             );
           })}
         </List>
