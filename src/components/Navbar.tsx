@@ -6,7 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
-export default function Navbar() {
+interface NavbarProps {
+  setAddItemAvailable: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Navbar({ setAddItemAvailable }: NavbarProps) {
+  const handleAddItemToggle = () => {
+    setAddItemAvailable(true);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -14,7 +22,7 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             To-Do List
           </Typography>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={handleAddItemToggle}>
             <AddIcon />
             <Typography>Add Item</Typography>
           </IconButton>

@@ -1,9 +1,13 @@
 import Navbar from "./Navbar";
 
-export default function AppHeader() {
+interface AppHeaderProps {
+  setAddItemAvailable: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function AppHeader({ setAddItemAvailable }: AppHeaderProps) {
   return (
     <>
-      <Navbar />
+      <Navbar setAddItemAvailable={setAddItemAvailable} />
     </>
   );
 }
