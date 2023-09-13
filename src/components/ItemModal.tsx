@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import ItemMenu from "./ItemMenu";
 
 const style = {
   position: "absolute",
@@ -49,6 +50,7 @@ export default function ItemModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <ItemMenu />
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {title}
           </Typography>

@@ -9,12 +9,11 @@ import { Container } from "@mui/material";
 import { useState } from "react";
 import itemEntries from "./ItemEntries";
 import ItemModal from "./ItemModal";
+import ItemMenu from "./ItemMenu";
 
 // Icon Components
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip/Tooltip";
 
 export default function TaskList() {
@@ -71,31 +70,8 @@ export default function TaskList() {
                       />
                     </ListItemText>
                   </ListItemButton>
-                  <Tooltip title="Edit">
-                    <ListItemButton
-                      sx={{ maxWidth: "5%" }}
-                      role={undefined}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <ListItemText>
-                        <EditIcon />
-                      </ListItemText>
-                    </ListItemButton>
-                  </Tooltip>
-                  <Tooltip title="Delete">
-                    <ListItemButton
-                      sx={{ maxWidth: "5%" }}
-                      role={undefined}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <ListItemText>
-                        <DeleteIcon />
-                      </ListItemText>
-                    </ListItemButton>
+                  <Tooltip title="More" arrow>
+                    <ItemMenu />
                   </Tooltip>
                 </ListItem>
               </div>
