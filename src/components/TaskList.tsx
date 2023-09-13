@@ -60,7 +60,15 @@ export default function TaskList() {
                       )}
                     </ListItemIcon>
                     <ListItemText id={labelId}>
-                      <ItemModal title={item.title} />
+                      <ItemModal
+                        title={item.title}
+                        description={item.description}
+                        dueDate={item.dueDate}
+                        priority={item.priority}
+                        location={item.location}
+                        tags={item.tags}
+                        projectId={item.projectId}
+                      />
                     </ListItemText>
                   </ListItemButton>
                   <Tooltip title="Edit">

@@ -18,9 +18,23 @@ const style = {
 
 interface ItemModalProps {
   title: string;
+  description?: string;
+  dueDate?: Date;
+  priority?: string;
+  location?: string;
+  tags?: string[];
+  projectId?: string;
 }
 
-export default function ItemModal({ title }: ItemModalProps) {
+export default function ItemModal({
+  title,
+  description,
+  dueDate,
+  priority,
+  location,
+  tags,
+  projectId,
+}: ItemModalProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,8 +53,35 @@ export default function ItemModal({ title }: ItemModalProps) {
             {title}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {description}
           </Typography>
+          {priority && (
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Priority: {priority}
+            </Typography>
+          )}
+          {location && (
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Location: {location}
+            </Typography>
+          )}
+          {projectId && (
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Project: {projectId}
+            </Typography>
+          )}
+          {dueDate && (
+            <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+              Due Date: {dueDate.getMonth() + 1}/{dueDate.getDate()}/
+              {dueDate.getFullYear()} at {dueDate.getHours()}:
+              {dueDate.getMinutes()}
+            </Typography>
+          )}
+          {tags && (
+            <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+              Tags: {tags}
+            </Typography>
+          )}
         </Box>
       </Modal>
     </div>
