@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import ItemMenu from "./ItemMenu";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
@@ -12,7 +13,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "50%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
@@ -50,10 +51,19 @@ export default function ItemModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ItemMenu />
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {title}
-          </Typography>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {title}
+              </Typography>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <ItemMenu />
+              <Button onClick={handleClose}>
+                <CloseIcon />
+              </Button>
+            </div>
+          </div>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {description}
           </Typography>
