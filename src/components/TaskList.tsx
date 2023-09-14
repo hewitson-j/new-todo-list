@@ -44,7 +44,21 @@ export default function TaskList() {
                   disablePadding
                   // onClick={() => handleToggleCompleted(index)}
                 >
-                  <ListItemButton role={undefined} dense>
+                  <ListItemButton
+                    role={undefined}
+                    dense
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "transparent", // Disable hover effect
+                      },
+                      "&:active": {
+                        backgroundColor: "transparent", // Disable ripple effect
+                      },
+                      "&:focusVisible": {
+                        backgroundColor: "transparent", // Disable focus ripple effect
+                      },
+                    }}
+                  >
                     <ListItemIcon>
                       {!isCompleted ? (
                         <CircleOutlinedIcon
