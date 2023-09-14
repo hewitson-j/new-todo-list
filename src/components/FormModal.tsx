@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
 import DatePickerInput from "./DatePickerInput";
+import TagManager from "./TagManager";
 
 const style = {
   position: "absolute",
@@ -90,6 +91,10 @@ export default function FormModal() {
             <DatePickerInput id="due-date" label="Due Date" />
             <DatePickerInput id="reminder" label="Reminder" />
           </div>
+          <TagManager />
+          {/* Create input
+          when user blurs or clicks on add, then append new tag to end of tags array
+          once they click on submit, it goes into permanent state */}
           <div
             style={{
               display: "flex",
