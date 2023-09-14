@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { TextField } from "@mui/material";
+import PrioritySelect from "./PrioritySelect";
 
 const style = {
   position: "absolute",
@@ -65,6 +66,9 @@ export default function FormModal() {
             fullWidth
             label="Description"
           />
+          <TextField id="location" label="Location" sx={{ margin: "1rem 0" }} />
+          <TextField id="projectId" label="Project" sx={{ margin: "1rem" }} />
+          <PrioritySelect />
         </Box>
       </Modal>
     </div>
