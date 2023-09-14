@@ -4,15 +4,17 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import { TextField } from "@mui/material";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "50%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
@@ -35,12 +37,34 @@ export default function FormModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add/Edit Item
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ mb: 2 }}
+            >
+              Add/Edit Item
+            </Typography>
+            <Button onClick={handleClose}>
+              <CloseIcon />
+            </Button>
+          </div>
+          <TextField
+            required
+            id="title"
+            label="Title"
+            fullWidth
+            sx={{ margin: "1rem 0" }}
+          />
+          <TextField
+            id="description"
+            multiline
+            maxRows={4}
+            rows={4}
+            fullWidth
+            label="Description"
+          />
         </Box>
       </Modal>
     </div>
