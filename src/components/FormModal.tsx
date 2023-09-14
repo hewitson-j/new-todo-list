@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
+import DatePickerInput from "./DatePickerInput";
 
 const style = {
   position: "absolute",
@@ -66,9 +67,43 @@ export default function FormModal() {
             fullWidth
             label="Description"
           />
-          <TextField id="location" label="Location" sx={{ margin: "1rem 0" }} />
-          <TextField id="projectId" label="Project" sx={{ margin: "1rem" }} />
+          <TextField
+            id="location"
+            label="Location"
+            sx={{ margin: "1rem 0" }}
+            fullWidth
+          />
+          <TextField
+            id="projectId"
+            label="Project"
+            sx={{ margin: "1rem 0" }}
+            fullWidth
+          />
           <PrioritySelect />
+          <div
+            style={{
+              margin: "1rem 0",
+              display: "flex",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <DatePickerInput id="due-date" label="Due Date" />
+            <DatePickerInput id="reminder" label="Reminder" />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              margin: "1rem",
+            }}
+          >
+            <Button variant="contained" disabled>
+              Save
+            </Button>
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
+          </div>
         </Box>
       </Modal>
     </div>
