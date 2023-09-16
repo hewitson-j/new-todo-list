@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -9,6 +8,9 @@ import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
 import DatePickerInput from "./DatePickerInput";
 import TagManager from "./TagManager";
+import { useState } from "react";
+
+import itemEntries from "./ItemEntries";
 
 const style = {
   position: "absolute",
@@ -23,9 +25,51 @@ const style = {
 };
 
 export default function FormModal() {
-  const [open, setOpen] = React.useState(false);
+  const [entryId, setEntryId] = useState(itemEntries.length);
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [projectId, setProjectId] = useState("");
+  const [priority, setPriority] = useState("low");
+  const [dueDate, setDueDate] = useState<Date | null>(new Date());
+  const [tags, setTags] = useState<string[]>([]);
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    resetForm();
+  };
+  const resetForm = () => {
+    setDescription("");
+    setLocation("");
+    setProjectId("");
+    setPriority("low");
+    setDueDate(new Date());
+    setTags([]);
+  };
+  const handleSave = () => {
+    const newItem = {
+      id: entryId,
+      title: title,
+      description: description,
+      isCompleted: false,
+      location: location,
+      projectId: projectId,
+      priority: undefined,
+      // dueDate: dueDate,
+      tags: tags,
+    };
+
+    itemEntries.push(newItem);
+    setEntryId(entryId + 1);
+
+    console.log(itemEntries);
+
+    handleClose();
+  };
+
+  const isSaveDisabled = title.trim() === "";
 
   return (
     <div>
@@ -59,26 +103,35 @@ export default function FormModal() {
             label="Title"
             fullWidth
             sx={{ margin: "1rem 0" }}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             id="description"
             multiline
-            maxRows={4}
             rows={4}
             fullWidth
             label="Description"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
           />
           <TextField
             id="location"
             label="Location"
             sx={{ margin: "1rem 0" }}
             fullWidth
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
           />
           <TextField
             id="projectId"
             label="Project"
             sx={{ margin: "1rem 0" }}
             fullWidth
+            onChange={(e) => {
+              setProjectId(e.target.value);
+            }}
           />
           <PrioritySelect />
           <div
@@ -102,7 +155,11 @@ export default function FormModal() {
               margin: "1rem",
             }}
           >
-            <Button variant="contained" disabled>
+            <Button
+              variant="contained"
+              disabled={isSaveDisabled}
+              onClick={handleSave}
+            >
               Save
             </Button>
             <Button variant="outlined" onClick={handleClose}>

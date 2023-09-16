@@ -1,4 +1,5 @@
 interface TodoItem {
+  id: number;
   title: string;
   description?: string;
   isCompleted: boolean;
@@ -12,6 +13,7 @@ interface TodoItem {
 
 const itemEntries: TodoItem[] = [
   {
+    id: 0,
     title: "Item 1",
     description: "This is a default item.",
     isCompleted: false,
@@ -23,6 +25,7 @@ const itemEntries: TodoItem[] = [
     projectId: "Project 1",
   },
   {
+    id: 1,
     title: "Item 2",
     description: "This is a default item.",
     isCompleted: false,
@@ -34,6 +37,7 @@ const itemEntries: TodoItem[] = [
     projectId: undefined,
   },
   {
+    id: 2,
     title: "Item 3",
     description: "This is a default item.",
     isCompleted: false,
@@ -45,6 +49,7 @@ const itemEntries: TodoItem[] = [
     projectId: undefined,
   },
   {
+    id: 3,
     title: "Item 4",
     description: "This is a default item.",
     isCompleted: false,
