@@ -48,6 +48,11 @@ export default function FormModal() {
     setDueDate(new Date());
     setTags([]);
   };
+
+  const handleTagsChange = (newTags: string[]) => {
+    setTags(newTags);
+  };
+
   const handleSave = () => {
     const newItem = {
       id: entryId,
@@ -144,7 +149,7 @@ export default function FormModal() {
             <DatePickerInput id="due-date" label="Due Date" />
             <DatePickerInput id="reminder" label="Reminder" />
           </div>
-          <TagManager />
+          <TagManager tags={tags} onTagsChange={handleTagsChange} />
           {/* Create input
           when user blurs or clicks on add, then append new tag to end of tags array
           once they click on submit, it goes into permanent state */}

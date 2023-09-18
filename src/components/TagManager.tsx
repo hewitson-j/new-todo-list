@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { TextField, Chip, Box } from "@mui/material";
 
-interface TagManagerProps {}
+interface TagManagerProps {
+  tags: string[];
+  onTagsChange: (newTags: string[]) => void;
+}
 
-const TagManager: React.FC<TagManagerProps> = () => {
+const TagManager: React.FC<TagManagerProps> = ({ tags, onTagsChange }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [tags, setTags] = useState<string[]>([]);
-  //   const [permanentTags, setPermanentTags] = useState<string[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
+  const handleDeleteTag = (tagToDelete: string) => {
+    const updatedTags = tags.filter((tag) => tag !== tagToDelete);
+    onTagsChange(updatedTags); // Call the callback to update tags in the parent component
+  };
+
   const handleAddClick = () => {
     if (inputValue.trim() !== "") {
-      setTags([...tags, inputValue]);
+      const newTags = [...tags, inputValue];
+      onTagsChange(newTags); // Call the callback to update tags in the parent component
       setInputValue("");
     }
   };
@@ -28,22 +35,10 @@ const TagManager: React.FC<TagManagerProps> = () => {
         value={inputValue}
         onChange={handleInputChange}
         onBlur={handleAddClick}
-      >
-        {/* <Button variant="contained" onClick={handleAddClick}>
-          Add
-        </Button> */}
-      </TextField>
-
+      />
       <Box mt={2}>
         {tags.map((tag, index) => (
-          <Chip
-            key={index}
-            label={tag}
-            onDelete={() => {
-              const tagsCopy = [...tags];
-              setTags(tagsCopy);
-            }}
-          />
+          <Chip key={index} label={tag} onDelete={() => handleDeleteTag(tag)} />
         ))}
       </Box>
     </div>

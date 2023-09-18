@@ -41,7 +41,11 @@ export default function ItemMenu() {
           <EditIcon />
           Edit
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+          }}
+        >
           <DeleteIcon />
           Delete
         </MenuItem>
