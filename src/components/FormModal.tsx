@@ -41,6 +41,7 @@ export default function FormModal() {
     resetForm();
   };
   const resetForm = () => {
+    setTitle("");
     setDescription("");
     setLocation("");
     setProjectId("");
@@ -54,6 +55,7 @@ export default function FormModal() {
   };
 
   const handleSave = () => {
+    console.log(priority);
     const newItem = {
       id: entryId,
       title: title,
@@ -61,7 +63,7 @@ export default function FormModal() {
       isCompleted: false,
       location: location,
       projectId: projectId,
-      priority: undefined,
+      priority: priority,
       // dueDate: dueDate,
       tags: tags,
     };
@@ -75,6 +77,10 @@ export default function FormModal() {
   };
 
   const isSaveDisabled = title.trim() === "";
+
+  const handlePriorityChange = (newPriority: string) => {
+    setPriority(newPriority); // Update the priority state in FormModal
+  };
 
   return (
     <div>
@@ -138,7 +144,10 @@ export default function FormModal() {
               setProjectId(e.target.value);
             }}
           />
-          <PrioritySelect />
+          <PrioritySelect
+            priority={priority}
+            onPriorityChange={handlePriorityChange}
+          />
           <div
             style={{
               margin: "1rem 0",

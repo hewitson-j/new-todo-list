@@ -1,15 +1,21 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export default function PrioritySelect() {
-  const [priority, setPriority] = React.useState("");
+interface PrioritySelectProps {
+  priority: string;
+  onPriorityChange: (newPriority: string) => void;
+}
 
+export default function PrioritySelect({
+  priority,
+  onPriorityChange,
+}: PrioritySelectProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    setPriority(event.target.value as string);
+    const newPriority = event.target.value as string;
+    onPriorityChange(newPriority);
   };
 
   return (
@@ -23,7 +29,7 @@ export default function PrioritySelect() {
           label="Priority"
           onChange={handleChange}
         >
-          <MenuItem value="">
+          <MenuItem value={"low"}>
             <em>None</em>
           </MenuItem>
           <MenuItem value={"low"}>Low</MenuItem>

@@ -4,7 +4,7 @@ interface TodoItem {
   description?: string;
   isCompleted: boolean;
   dueDate?: Date;
-  priority?: "low" | "normal" | "high";
+  priority?: string;
   reminderDateTime?: Date;
   location?: string;
   tags?: string[];
