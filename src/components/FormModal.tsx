@@ -9,8 +9,9 @@ import PrioritySelect from "./PrioritySelect";
 import DatePickerInput from "./DatePickerInput";
 import TagManager from "./TagManager";
 import { useState } from "react";
+import { useTasks } from "./TasksProvider";
 
-import itemEntries from "./ItemEntries";
+// import itemEntries from "./ItemEntries";
 
 const style = {
   position: "absolute",
@@ -24,16 +25,20 @@ const style = {
   p: 4,
 };
 
+// TODO: Add event handler to add new task to tasks
 export default function FormModal() {
-  const [entryId, setEntryId] = useState(itemEntries.length);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [projectId, setProjectId] = useState("");
   const [priority, setPriority] = useState("low");
-  const [dueDate, setDueDate] = useState<Date | null>(new Date());
+  // const [dueDate, setDueDate] = useState<Date | null>(new Date());
   const [tags, setTags] = useState<string[]>([]);
+
+  const { addTask } = useTasks();
+
+  // const [itemEntries]
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -46,7 +51,7 @@ export default function FormModal() {
     setLocation("");
     setProjectId("");
     setPriority("low");
-    setDueDate(new Date());
+    // setDueDate(new Date());
     setTags([]);
   };
 
@@ -57,7 +62,8 @@ export default function FormModal() {
   const handleSave = () => {
     console.log(priority);
     const newItem = {
-      id: entryId,
+      // TODO: Change ID to UUID;
+      id: (Math.round(Math.random() * 1000)).toString(),
       title: title,
       description: description,
       isCompleted: false,
@@ -68,10 +74,12 @@ export default function FormModal() {
       tags: tags,
     };
 
-    itemEntries.push(newItem);
-    setEntryId(entryId + 1);
+    addTask?.(newItem);
 
-    console.log(itemEntries);
+    // itemEntries.push(newItem);
+    // setEntryId(entryId + 1);
+
+    // console.log(itemEntries);
 
     handleClose();
   };
@@ -159,9 +167,6 @@ export default function FormModal() {
             <DatePickerInput id="reminder" label="Reminder" />
           </div>
           <TagManager tags={tags} onTagsChange={handleTagsChange} />
-          {/* Create input
-          when user blurs or clicks on add, then append new tag to end of tags array
-          once they click on submit, it goes into permanent state */}
           <div
             style={{
               display: "flex",

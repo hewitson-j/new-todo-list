@@ -6,37 +6,43 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/material";
 
-import { useState } from "react";
-import itemEntries from "./ItemEntries";
+// import { useState } from "react";
+// import itemEntries from "./ItemEntries";
 import ItemModal from "./ItemModal";
-import ItemMenu from "./ItemMenu";
+import TaskMenu from "./TaskMenu";
 
 // Icon Components
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+// import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Tooltip from "@mui/material/Tooltip/Tooltip";
+import { Tasks } from "./ItemEntries";
+import { useTasks } from "./TasksProvider";
 
-export default function TaskList() {
-  const [completedItems, setCompletedItems] = useState(
-    itemEntries.map((item) => item.isCompleted)
-  );
+export default function Tasks() {
+  // root value
 
-  const handleToggleCompleted = (index: number) => {
-    setCompletedItems((prevCompletedItems) => {
-      const newCompletedItems = [...prevCompletedItems];
-      newCompletedItems[index] = !newCompletedItems[index];
-      return newCompletedItems;
-    });
-  };
+  const { tasks } = useTasks();
+
+  // Computed Value
+  // const [completedTasks, setCompletedTasks] = useState<Tasks>([]);
+
+  // TODO:
+  // const handleToggleCompleted = (index: number) => {
+  //   // setCompletedItems((prevCompletedItems) => {
+  //   //   const newCompletedItems = [...prevCompletedItems];
+  //   //   newCompletedItems[index] = !newCompletedItems[index];
+  //   //   return newCompletedItems;
+  //   // });
+  // };
 
   return (
     <>
       <br />
       <Container>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {itemEntries.map((item, index) => {
+          {tasks?.map((item, index) => {
             const labelId = `checkbox-list-label-${index}`;
-            const isCompleted = completedItems[index];
+            // const isCompleted = completedTasks[index];
 
             return (
               <div key={index}>
@@ -60,7 +66,10 @@ export default function TaskList() {
                     }}
                   >
                     <ListItemIcon>
-                      {!isCompleted ? (
+                      <CircleOutlinedIcon color="inherit" />
+
+                      {/* TODO: Add new logic to change circle icon on Task isCompleted */}
+                      {/* {!isCompleted ? (
                         <CircleOutlinedIcon
                           color="inherit"
                           onClick={() => handleToggleCompleted(index)}
@@ -70,10 +79,11 @@ export default function TaskList() {
                           color="success"
                           onClick={() => handleToggleCompleted(index)}
                         />
-                      )}
+                      )} */}
                     </ListItemIcon>
                     <ListItemText id={labelId}>
                       <ItemModal
+                        id={item.id}
                         title={item.title}
                         description={item.description}
                         dueDate={item.dueDate}
@@ -85,7 +95,7 @@ export default function TaskList() {
                     </ListItemText>
                   </ListItemButton>
                   <Tooltip title="More" arrow>
-                    <ItemMenu />
+                    <TaskMenu taskId={item.id} />
                   </Tooltip>
                 </ListItem>
               </div>
