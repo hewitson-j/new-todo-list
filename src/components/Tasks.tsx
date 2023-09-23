@@ -7,15 +7,14 @@ import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/material";
 
 // import { useState } from "react";
-// import itemEntries from "./ItemEntries";
-import ItemModal from "./ItemModal";
+import TaskModal from "./TaskModal";
 import TaskMenu from "./TaskMenu";
 
 // Icon Components
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 // import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Tooltip from "@mui/material/Tooltip/Tooltip";
-import { Tasks } from "./ItemEntries";
+import { Tasks } from "./TaskEntries";
 import { useTasks } from "./TasksProvider";
 
 export default function Tasks() {
@@ -40,7 +39,7 @@ export default function Tasks() {
       <br />
       <Container>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {tasks?.map((item, index) => {
+          {tasks?.map((task, index) => {
             const labelId = `checkbox-list-label-${index}`;
             // const isCompleted = completedTasks[index];
 
@@ -82,20 +81,20 @@ export default function Tasks() {
                       )} */}
                     </ListItemIcon>
                     <ListItemText id={labelId}>
-                      <ItemModal
-                        id={item.id}
-                        title={item.title}
-                        description={item.description}
-                        dueDate={item.dueDate}
-                        priority={item.priority}
-                        location={item.location}
-                        tags={item.tags}
-                        projectId={item.projectId}
+                      <TaskModal
+                        id={task.id}
+                        title={task.title}
+                        description={task.description}
+                        dueDate={task.dueDate}
+                        priority={task.priority}
+                        location={task.location}
+                        tags={task.tags}
+                        projectId={task.projectId}
                       />
                     </ListItemText>
                   </ListItemButton>
                   <Tooltip title="More" arrow>
-                    <TaskMenu taskId={item.id} />
+                    <TaskMenu taskId={task.id} />
                   </Tooltip>
                 </ListItem>
               </div>

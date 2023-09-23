@@ -11,8 +11,6 @@ import TagManager from "./TagManager";
 import { useState } from "react";
 import { useTasks } from "./TasksProvider";
 
-// import itemEntries from "./ItemEntries";
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -38,8 +36,6 @@ export default function FormModal() {
 
   const { addTask } = useTasks();
 
-  // const [itemEntries]
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -61,9 +57,9 @@ export default function FormModal() {
 
   const handleSave = () => {
     console.log(priority);
-    const newItem = {
+    const newTask = {
       // TODO: Change ID to UUID;
-      id: (Math.round(Math.random() * 1000)).toString(),
+      id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
       isCompleted: false,
@@ -74,12 +70,7 @@ export default function FormModal() {
       tags: tags,
     };
 
-    addTask?.(newItem);
-
-    // itemEntries.push(newItem);
-    // setEntryId(entryId + 1);
-
-    // console.log(itemEntries);
+    addTask?.(newTask);
 
     handleClose();
   };
@@ -94,7 +85,7 @@ export default function FormModal() {
     <div>
       <Button onClick={handleOpen} variant="contained">
         <AddIcon />
-        Add Item
+        Add Task
       </Button>
       <Modal
         open={open}
@@ -110,7 +101,7 @@ export default function FormModal() {
               component="h2"
               sx={{ mb: 2 }}
             >
-              Add/Edit Item
+              Add/Edit Task
             </Typography>
             <Button onClick={handleClose}>
               <CloseIcon />

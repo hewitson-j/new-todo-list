@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { Task, Tasks } from "./ItemEntries";
+import { Task, Tasks } from "./TaskEntries";
 
 const TaskContext = createContext<{
   tasks?: Tasks;

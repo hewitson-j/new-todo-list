@@ -18,7 +18,7 @@ const style = {
   p: 4,
 };
 
-interface ItemModalProps {
+interface TaskModalProps {
   id: string;
   title: string;
   description?: string;
@@ -29,7 +29,7 @@ interface ItemModalProps {
   projectId?: string;
 }
 
-export default function ItemModal({
+export default function TaskModal({
   id,
   title,
   description,
@@ -38,7 +38,7 @@ export default function ItemModal({
   location,
   tags,
   projectId,
-}: ItemModalProps) {
+}: TaskModalProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
