@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import ItemMenu from "./ItemMenu";
+import TaskMenu from "./TaskMenu";
 import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
@@ -18,7 +18,8 @@ const style = {
   p: 4,
 };
 
-interface ItemModalProps {
+interface TaskModalProps {
+  id: string;
   title: string;
   description?: string;
   dueDate?: Date;
@@ -28,7 +29,8 @@ interface ItemModalProps {
   projectId?: string;
 }
 
-export default function ItemModal({
+export default function TaskModal({
+  id,
   title,
   description,
   dueDate,
@@ -36,7 +38,7 @@ export default function ItemModal({
   location,
   tags,
   projectId,
-}: ItemModalProps) {
+}: TaskModalProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,7 +60,7 @@ export default function ItemModal({
               </Typography>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <ItemMenu />
+              <TaskMenu taskId={id} />
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>

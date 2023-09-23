@@ -1,6 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import AppHeader from "./components/AppHeader";
-import TaskList from "./components/TaskList";
+import Tasks from "./components/Tasks";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Container>
         <br></br>
         <Typography variant="h4">Task List:</Typography>
-        <TaskList />
+        <Tasks />
       </Container>
     </>
   );
