@@ -1,10 +1,10 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TaskMenu from "./TaskMenu";
 import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
 
 const style = {
   position: "absolute",
@@ -45,7 +45,12 @@ export default function TaskModal({
 
   return (
     <div>
-      <Button onClick={handleOpen}>{title}</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{ width: "100%", padding: "2% 5%", justifyContent: "start" }}
+      >
+        {title}
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
