@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import TaskMenu from "./TaskMenu";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
+import { useEffect, useState } from "react";
 
 const style = {
   position: "absolute",
@@ -27,6 +28,7 @@ interface TaskModalProps {
   location?: string;
   tags?: string[];
   projectId?: string;
+  completion: boolean;
 }
 
 export default function TaskModal({
@@ -38,16 +40,27 @@ export default function TaskModal({
   location,
   tags,
   projectId,
+  completion,
 }: TaskModalProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [completionState, setCompletionState] = useState(completion);
+  useEffect(() => {
+    setCompletionState(completion);
+  }, [completion]);
 
   return (
     <div>
       <Button
         onClick={handleOpen}
-        sx={{ width: "100%", padding: "2% 5%", justifyContent: "start" }}
+        sx={{
+          width: "100%",
+          padding: "2% 5%",
+          justifyContent: "start",
+          textDecoration: completionState ? "line-through" : "none",
+          color: completionState ? "grey" : "inherit",
+        }}
       >
         {title}
       </Button>

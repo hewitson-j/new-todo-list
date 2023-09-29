@@ -68,6 +68,7 @@ function Task({ task }: TaskProps) {
               location={task.location}
               tags={task.tags}
               projectId={task.projectId}
+              completion={task.isCompleted}
             />
           </ListItemText>
         </ListItemButton>
