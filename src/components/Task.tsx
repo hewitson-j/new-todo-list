@@ -69,6 +69,7 @@ function Task({ task }: TaskProps) {
               tags={task.tags}
               projectId={task.projectId}
               completion={task.isCompleted}
+              reminderDateTime={task.reminderDateTime}
             />
           </ListItemText>
         </ListItemButton>

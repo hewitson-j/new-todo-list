@@ -29,6 +29,7 @@ interface TaskModalProps {
   tags?: string[];
   projectId?: string;
   completion: boolean;
+  reminderDateTime?: Date;
 }
 
 export default function TaskModal({
@@ -41,6 +42,7 @@ export default function TaskModal({
   tags,
   projectId,
   completion,
+  reminderDateTime,
 }: TaskModalProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -105,8 +107,13 @@ export default function TaskModal({
           {dueDate && (
             <Typography id="modal-modal-description" sx={{ mt: 4 }}>
               Due Date: {dueDate.getMonth() + 1}/{dueDate.getDate()}/
-              {dueDate.getFullYear()} at {dueDate.getHours()}:
-              {dueDate.getMinutes()}
+              {dueDate.getFullYear()}
+            </Typography>
+          )}
+          {reminderDateTime && (
+            <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+              Reminder: {reminderDateTime.getMonth() + 1}/
+              {reminderDateTime.getDay()}/{reminderDateTime.getFullYear()}
             </Typography>
           )}
           {tags && (

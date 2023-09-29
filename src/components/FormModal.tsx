@@ -112,7 +112,7 @@ export default function FormModal() {
       projectId: projectId,
       priority: priority,
       dueDate: dueDate,
-      remindDate: remindDate,
+      reminderDateTime: remindDate,
       tags: tags,
     };
 
