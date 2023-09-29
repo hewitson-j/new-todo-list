@@ -59,7 +59,7 @@ export default function TaskModal({
           padding: "2% 5%",
           justifyContent: "start",
           textDecoration: completionState ? "line-through" : "none",
-          color: completionState ? "grey" : "inherit",
+          color: completionState ? "grey" : "",
         }}
       >
         {title}

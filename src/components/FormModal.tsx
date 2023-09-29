@@ -6,10 +6,10 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
-import DatePickerInput from "./DatePickerInput";
 import TagManager from "./TagManager";
 import { useState } from "react";
 import { useTasks } from "./TasksProvider";
+import DateInput from "./DateInput";
 
 const style = {
   position: "absolute",
@@ -31,7 +31,35 @@ export default function FormModal() {
   const [location, setLocation] = useState("");
   const [projectId, setProjectId] = useState("");
   const [priority, setPriority] = useState("low");
-  // const [dueDate, setDueDate] = useState<Date | null>(new Date());
+
+  const [dueDateMonth, setDueDateMonth] = useState("");
+  const [dueDateDay, setDueDateDay] = useState("");
+  const [dueDateYear, setDueDateYear] = useState("");
+
+  const handleDueDateMonthChange = (value: string) => {
+    setDueDateMonth(value);
+  };
+  const handleDueDateDayChange = (value: string) => {
+    setDueDateDay(value);
+  };
+  const handleDueDateYearChange = (value: string) => {
+    setDueDateYear(value);
+  };
+
+  const [remindDateMonth, setRemindDateMonth] = useState("");
+  const [remindDateDay, setRemindDateDay] = useState("");
+  const [remindDateYear, setRemindDateYear] = useState("");
+
+  const handleRemindDateMonthChange = (value: string) => {
+    setRemindDateMonth(value);
+  };
+  const handleRemindDateDayChange = (value: string) => {
+    setRemindDateDay(value);
+  };
+  const handleRemindDateYearChange = (value: string) => {
+    setRemindDateYear(value);
+  };
+
   const [tags, setTags] = useState<string[]>([]);
 
   const { addTask } = useTasks();
@@ -48,6 +76,12 @@ export default function FormModal() {
     setProjectId("");
     setPriority("low");
     // setDueDate(new Date());
+    setDueDateMonth("");
+    setDueDateDay("");
+    setDueDateYear("");
+    setRemindDateDay("");
+    setRemindDateMonth("");
+    setRemindDateYear("");
     setTags([]);
   };
 
@@ -57,8 +91,19 @@ export default function FormModal() {
 
   const handleSave = () => {
     console.log(priority);
+
+    const dueDate = new Date(
+      parseInt(dueDateYear),
+      parseInt(dueDateMonth) - 1,
+      parseInt(dueDateDay)
+    );
+    const remindDate = new Date(
+      parseInt(remindDateYear),
+      parseInt(remindDateMonth) - 1,
+      parseInt(remindDateDay)
+    );
+
     const newTask = {
-      // TODO: Change ID to UUID;
       id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
@@ -66,7 +111,8 @@ export default function FormModal() {
       location: location,
       projectId: projectId,
       priority: priority,
-      // dueDate: dueDate,
+      dueDate: dueDate,
+      remindDate: remindDate,
       tags: tags,
     };
 
@@ -78,7 +124,7 @@ export default function FormModal() {
   const isSaveDisabled = title.trim() === "";
 
   const handlePriorityChange = (newPriority: string) => {
-    setPriority(newPriority); // Update the priority state in FormModal
+    setPriority(newPriority);
   };
 
   return (
@@ -154,8 +200,24 @@ export default function FormModal() {
               justifyContent: "space-evenly",
             }}
           >
-            <DatePickerInput id="due-date" label="Due Date" />
-            <DatePickerInput id="reminder" label="Reminder" />
+            <DateInput
+              title="Due Date:"
+              month={dueDateMonth}
+              day={dueDateDay}
+              year={dueDateYear}
+              onMonthChange={handleDueDateMonthChange}
+              onDayChange={handleDueDateDayChange}
+              onYearChange={handleDueDateYearChange}
+            />
+            <DateInput
+              title="Reminder Date:"
+              month={remindDateMonth}
+              day={remindDateDay}
+              year={remindDateYear}
+              onMonthChange={handleRemindDateMonthChange}
+              onDayChange={handleRemindDateDayChange}
+              onYearChange={handleRemindDateYearChange}
+            />
           </div>
           <TagManager tags={tags} onTagsChange={handleTagsChange} />
           <div
