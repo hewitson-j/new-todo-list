@@ -6,6 +6,7 @@ const TaskContext = createContext<{
   addTask?: (newTask: TaskType) => void;
   removeTaskById?: (taskId: TaskType["id"]) => void;
   updateTaskById?: (taskId: TaskType["id"], updatedTask: TaskType) => void;
+  filterCompletedTasks?: () => number;
 }>({});
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -18,6 +19,13 @@ function TasksProvider({ children }: { children: ReactNode }) {
 
   function addTask(newTask: TaskType) {
     setTasks([...tasks, newTask]);
+  }
+
+  function filterCompletedTasks() {
+    const completedTasks = [...tasks].filter((task) => {
+      return task.isCompleted == true;
+    });
+    return completedTasks.length;
   }
 
   function removeTaskById(taskId: TaskType["id"]) {
@@ -47,6 +55,7 @@ function TasksProvider({ children }: { children: ReactNode }) {
         addTask,
         removeTaskById,
         updateTaskById,
+        filterCompletedTasks,
       }}
     >
       {children}

@@ -4,8 +4,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import FormModal from "./FormModal";
+import { useTasks } from "./TasksProvider";
 
 export default function Navbar() {
+  const { filterCompletedTasks } = useTasks();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -15,7 +18,7 @@ export default function Navbar() {
           </Typography>
           <FormModal />
           <TaskAltIcon color="inherit" />
-          <Typography>0 Completed</Typography>
+          <Typography>{filterCompletedTasks?.()} Completed</Typography>
         </Toolbar>
       </AppBar>
     </Box>
