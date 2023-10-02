@@ -4,8 +4,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import FormModal from "./FormModal";
+// import { useState } from "react";
 
 export default function Navbar() {
+  // const [completed, setCompleted] = useState(0);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

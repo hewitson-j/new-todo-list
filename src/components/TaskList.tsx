@@ -6,42 +6,37 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/material";
 
-// import { useState } from "react";
-import TaskModal from "./TaskModal";
-import TaskMenu from "./TaskMenu";
+import { useState } from "react";
+import itemEntries from "./ItemEntries";
+import ItemModal from "./ItemModal";
+import ItemMenu from "./ItemMenu";
 
 // Icon Components
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
-// import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Tooltip from "@mui/material/Tooltip/Tooltip";
-import { Tasks } from "./TaskEntries";
-import { useTasks } from "./TasksProvider";
 
-export default function Tasks() {
-  // root value
+export default function TaskList() {
+  const [completedItems, setCompletedItems] = useState(
+    itemEntries.map((item) => item.isCompleted)
+  );
 
-  const { tasks } = useTasks();
-
-  // Computed Value
-  // const [completedTasks, setCompletedTasks] = useState<Tasks>([]);
-
-  // TODO:
-  // const handleToggleCompleted = (index: number) => {
-  //   // setCompletedItems((prevCompletedItems) => {
-  //   //   const newCompletedItems = [...prevCompletedItems];
-  //   //   newCompletedItems[index] = !newCompletedItems[index];
-  //   //   return newCompletedItems;
-  //   // });
-  // };
+  const handleToggleCompleted = (index: number) => {
+    setCompletedItems((prevCompletedItems) => {
+      const newCompletedItems = [...prevCompletedItems];
+      newCompletedItems[index] = !newCompletedItems[index];
+      return newCompletedItems;
+    });
+  };
 
   return (
     <>
       <br />
       <Container>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {tasks?.map((task, index) => {
+          {itemEntries.map((item, index) => {
             const labelId = `checkbox-list-label-${index}`;
-            // const isCompleted = completedTasks[index];
+            const isCompleted = completedItems[index];
 
             return (
               <div key={index}>
@@ -65,10 +60,7 @@ export default function Tasks() {
                     }}
                   >
                     <ListItemIcon>
-                      <CircleOutlinedIcon color="inherit" />
-
-                      {/* TODO: Add new logic to change circle icon on Task isCompleted */}
-                      {/* {!isCompleted ? (
+                      {!isCompleted ? (
                         <CircleOutlinedIcon
                           color="inherit"
                           onClick={() => handleToggleCompleted(index)}
@@ -78,23 +70,22 @@ export default function Tasks() {
                           color="success"
                           onClick={() => handleToggleCompleted(index)}
                         />
-                      )} */}
+                      )}
                     </ListItemIcon>
                     <ListItemText id={labelId}>
-                      <TaskModal
-                        id={task.id}
-                        title={task.title}
-                        description={task.description}
-                        dueDate={task.dueDate}
-                        priority={task.priority}
-                        location={task.location}
-                        tags={task.tags}
-                        projectId={task.projectId}
+                      <ItemModal
+                        title={item.title}
+                        description={item.description}
+                        dueDate={item.dueDate}
+                        priority={item.priority}
+                        location={item.location}
+                        tags={item.tags}
+                        projectId={item.projectId}
                       />
                     </ListItemText>
                   </ListItemButton>
                   <Tooltip title="More" arrow>
-                    <TaskMenu taskId={task.id} />
+                    <ItemMenu />
                   </Tooltip>
                 </ListItem>
               </div>
