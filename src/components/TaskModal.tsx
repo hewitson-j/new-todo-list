@@ -127,11 +127,11 @@ export default function TaskModal({
               Location: {location}
             </Typography>
           )}
-          {projectId && (
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Project: {projectId}
-            </Typography>
-          )}
+
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Project: {projectId ? projectId : "Inbox"}
+          </Typography>
+
           {dueDate && (
             <Typography id="modal-modal-description" sx={{ mt: 4 }}>
               Due Date: {dueDate.getMonth() + 1}/{dueDate.getDate()}/
