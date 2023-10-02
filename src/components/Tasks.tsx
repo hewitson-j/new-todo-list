@@ -1,18 +1,29 @@
 import List from "@mui/material/List";
 import { Container } from "@mui/material";
-import Task, { Tasks } from "./Task";
+import Task, { TaskType, Tasks } from "./Task";
 import { useTasks } from "./TasksProvider";
 
-export default function Tasks() {
+interface TaskProps {
+  showCompletedTasks: boolean;
+}
+
+export default function Tasks({ showCompletedTasks }: TaskProps) {
   const { tasks } = useTasks();
+
+  const filteredTasks = showCompletedTasks
+    ? tasks
+    : tasks?.filter((task) => !task.isCompleted);
 
   return (
     <>
       <br />
       <Container>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {tasks?.map((task) => (
-            <Task task={task} />
+          {/* {tasks?.map((task) => (
+            <Task task={task} key={task.id} />
+          ))} */}
+          {filteredTasks?.map((task: TaskType) => (
+            <Task task={task} key={task.id} />
           ))}
         </List>
       </Container>
