@@ -6,13 +6,8 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useTasks } from "./TasksProvider";
 
-interface TaskMenuProps {
-  taskId: string
-}
-
-export default function TaskMenu({ taskId }: TaskMenuProps) {
+export default function ItemMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,8 +16,6 @@ export default function TaskMenu({ taskId }: TaskMenuProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const { removeTaskById } = useTasks();
 
   return (
     <div>
@@ -48,12 +41,7 @@ export default function TaskMenu({ taskId }: TaskMenuProps) {
           <EditIcon />
           Edit
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            removeTaskById?.(taskId);
-            handleClose();
-          }}
-        >
+        <MenuItem onClick={handleClose}>
           <DeleteIcon />
           Delete
         </MenuItem>

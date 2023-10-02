@@ -1,3 +1,4 @@
+import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -8,8 +9,6 @@ import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
 import DatePickerInput from "./DatePickerInput";
 import TagManager from "./TagManager";
-import { useState } from "react";
-import { useTasks } from "./TasksProvider";
 
 const style = {
   position: "absolute",
@@ -23,69 +22,16 @@ const style = {
   p: 4,
 };
 
-// TODO: Add event handler to add new task to tasks
 export default function FormModal() {
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [projectId, setProjectId] = useState("");
-  const [priority, setPriority] = useState("low");
-  // const [dueDate, setDueDate] = useState<Date | null>(new Date());
-  const [tags, setTags] = useState<string[]>([]);
-
-  const { addTask } = useTasks();
-
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    resetForm();
-  };
-  const resetForm = () => {
-    setTitle("");
-    setDescription("");
-    setLocation("");
-    setProjectId("");
-    setPriority("low");
-    // setDueDate(new Date());
-    setTags([]);
-  };
-
-  const handleTagsChange = (newTags: string[]) => {
-    setTags(newTags);
-  };
-
-  const handleSave = () => {
-    console.log(priority);
-    const newTask = {
-      // TODO: Change ID to UUID;
-      id: Math.round(Math.random() * 1000).toString(),
-      title: title,
-      description: description,
-      isCompleted: false,
-      location: location,
-      projectId: projectId,
-      priority: priority,
-      // dueDate: dueDate,
-      tags: tags,
-    };
-
-    addTask?.(newTask);
-
-    handleClose();
-  };
-
-  const isSaveDisabled = title.trim() === "";
-
-  const handlePriorityChange = (newPriority: string) => {
-    setPriority(newPriority); // Update the priority state in FormModal
-  };
+  const handleClose = () => setOpen(false);
 
   return (
     <div>
       <Button onClick={handleOpen} variant="contained">
         <AddIcon />
-        Add Task
+        Add Item
       </Button>
       <Modal
         open={open}
@@ -101,7 +47,7 @@ export default function FormModal() {
               component="h2"
               sx={{ mb: 2 }}
             >
-              Add/Edit Task
+              Add/Edit Item
             </Typography>
             <Button onClick={handleClose}>
               <CloseIcon />
@@ -113,40 +59,28 @@ export default function FormModal() {
             label="Title"
             fullWidth
             sx={{ margin: "1rem 0" }}
-            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             id="description"
             multiline
+            maxRows={4}
             rows={4}
             fullWidth
             label="Description"
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
           />
           <TextField
             id="location"
             label="Location"
             sx={{ margin: "1rem 0" }}
             fullWidth
-            onChange={(e) => {
-              setLocation(e.target.value);
-            }}
           />
           <TextField
             id="projectId"
             label="Project"
             sx={{ margin: "1rem 0" }}
             fullWidth
-            onChange={(e) => {
-              setProjectId(e.target.value);
-            }}
           />
-          <PrioritySelect
-            priority={priority}
-            onPriorityChange={handlePriorityChange}
-          />
+          <PrioritySelect />
           <div
             style={{
               margin: "1rem 0",
@@ -157,7 +91,10 @@ export default function FormModal() {
             <DatePickerInput id="due-date" label="Due Date" />
             <DatePickerInput id="reminder" label="Reminder" />
           </div>
-          <TagManager tags={tags} onTagsChange={handleTagsChange} />
+          <TagManager />
+          {/* Create input
+          when user blurs or clicks on add, then append new tag to end of tags array
+          once they click on submit, it goes into permanent state */}
           <div
             style={{
               display: "flex",
@@ -165,11 +102,7 @@ export default function FormModal() {
               margin: "1rem",
             }}
           >
-            <Button
-              variant="contained"
-              disabled={isSaveDisabled}
-              onClick={handleSave}
-            >
+            <Button variant="contained" disabled>
               Save
             </Button>
             <Button variant="outlined" onClick={handleClose}>
