@@ -7,9 +7,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTasks } from "./TasksProvider";
+import EditFormModal from "./EditFormModal";
 
 interface TaskMenuProps {
-  taskId: string
+  taskId: string;
 }
 
 export default function TaskMenu({ taskId }: TaskMenuProps) {
@@ -22,7 +23,7 @@ export default function TaskMenu({ taskId }: TaskMenuProps) {
     setAnchorEl(null);
   };
 
-  const { removeTaskById } = useTasks();
+  const { removeTaskById, findTaskById } = useTasks();
 
   return (
     <div>
@@ -46,7 +47,7 @@ export default function TaskMenu({ taskId }: TaskMenuProps) {
       >
         <MenuItem onClick={handleClose}>
           <EditIcon />
-          Edit
+          <EditFormModal task={findTaskById?.(taskId)} />
         </MenuItem>
         <MenuItem
           onClick={() => {
