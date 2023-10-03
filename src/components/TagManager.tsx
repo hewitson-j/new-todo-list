@@ -15,7 +15,7 @@ const TagManager: React.FC<TagManagerProps> = ({ tags, onTagsChange }) => {
 
   const handleDeleteTag = (tagToDelete: string) => {
     const updatedTags = tags.filter((tag) => tag !== tagToDelete);
-    onTagsChange(updatedTags); // Call the callback to update tags in the parent component
+    onTagsChange(updatedTags);
   };
 
   const handleAddClick = () => {

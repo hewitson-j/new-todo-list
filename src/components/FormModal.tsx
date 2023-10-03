@@ -75,7 +75,6 @@ export default function FormModal() {
     setLocation("");
     setProjectId("");
     setPriority("low");
-    // setDueDate(new Date());
     setDueDateMonth("");
     setDueDateDay("");
     setDueDateYear("");
@@ -90,8 +89,6 @@ export default function FormModal() {
   };
 
   const handleSave = () => {
-    console.log(priority);
-
     const dueDate = new Date(
       parseInt(dueDateYear),
       parseInt(dueDateMonth) - 1,
@@ -103,13 +100,20 @@ export default function FormModal() {
       parseInt(remindDateDay)
     );
 
+    let project;
+    if (projectId === "") {
+      project = "Inbox";
+    } else {
+      project = projectId;
+    }
+
     const newTask = {
       id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
       isCompleted: false,
       location: location,
-      projectId: projectId,
+      projectId: project,
       priority: priority,
       dueDate: dueDate,
       reminderDateTime: remindDate,

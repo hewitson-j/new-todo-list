@@ -19,9 +19,6 @@ export default function Tasks({ showCompletedTasks }: TaskProps) {
       <br />
       <Container>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {/* {tasks?.map((task) => (
-            <Task task={task} key={task.id} />
-          ))} */}
           {filteredTasks?.map((task: TaskType) => (
             <Task task={task} key={task.id} />
           ))}

@@ -52,25 +52,23 @@ export default function TaskModal({
     setCompletionState(completion);
   }, [completion]);
 
-  let buttonBackgroundColor = "";
   let buttonColor = "";
-
+  let fontWeight = "";
   let additionalTitleText = "";
 
   const currentDate = new Date();
 
   if (dueDate) {
     const dueDateObj = new Date(dueDate);
-
     if (!completionState) {
       if (currentDate.toDateString() === dueDateObj.toDateString()) {
-        buttonBackgroundColor = "green";
-        buttonColor = "white";
+        buttonColor = "green";
+        fontWeight = "bold";
         additionalTitleText = " - DUE TODAY";
       } else if (currentDate > dueDateObj) {
-        buttonBackgroundColor = "red";
-        buttonColor = "white";
+        buttonColor = "red";
         additionalTitleText = " - PAST DUE";
+        fontWeight = "bold";
       }
     }
   }
@@ -85,7 +83,7 @@ export default function TaskModal({
           justifyContent: "start",
           textDecoration: completionState ? "line-through" : "none",
           color: completionState ? "grey" : buttonColor,
-          backgroundColor: buttonBackgroundColor,
+          fontWeight: completionState ? "" : fontWeight,
           "&:hover": {
             color: "inherit",
           },
@@ -129,7 +127,7 @@ export default function TaskModal({
           )}
 
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Project: {projectId ? projectId : "Inbox"}
+            Project: {projectId}
           </Typography>
 
           {dueDate && (
