@@ -89,16 +89,23 @@ export default function FormModal() {
   };
 
   const handleSave = () => {
-    const dueDate = new Date(
-      parseInt(dueDateYear),
-      parseInt(dueDateMonth) - 1,
-      parseInt(dueDateDay)
-    );
-    const remindDate = new Date(
-      parseInt(remindDateYear),
-      parseInt(remindDateMonth) - 1,
-      parseInt(remindDateDay)
-    );
+    let dueDate: Date | undefined = undefined;
+    if (dueDateYear && dueDateMonth && dueDateDay) {
+      dueDate = new Date(
+        parseInt(dueDateYear),
+        parseInt(dueDateMonth) - 1,
+        parseInt(dueDateDay)
+      );
+    }
+
+    let reminderDateTime: Date | undefined = undefined;
+    if (remindDateYear && remindDateMonth && remindDateDay) {
+      reminderDateTime = new Date(
+        parseInt(remindDateYear),
+        parseInt(remindDateMonth) - 1,
+        parseInt(remindDateDay)
+      );
+    }
 
     let project;
     if (projectId === "") {
@@ -116,7 +123,7 @@ export default function FormModal() {
       projectId: project,
       priority: priority,
       dueDate: dueDate,
-      reminderDateTime: remindDate,
+      reminderDateTime: reminderDateTime,
       tags: tags,
     };
 
