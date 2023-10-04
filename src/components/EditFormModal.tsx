@@ -43,8 +43,6 @@ export default function EditFormModal({
   const [priority, setPriority] = useState(task?.priority ?? "low");
   const isCompleted = task?.isCompleted;
 
-  const id = task?.id;
-
   const [dueDateMonth, setDueDateMonth] = useState("");
   const [dueDateDay, setDueDateDay] = useState("");
   const [dueDateYear, setDueDateYear] = useState("");
@@ -156,7 +154,6 @@ export default function EditFormModal({
             >
               Edit Task
             </Typography>
-            <TextField disabled id="id" label="ID" value={id} />
             <Button onClick={handleClose}>
               <CloseIcon />
             </Button>
