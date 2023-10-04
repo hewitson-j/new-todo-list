@@ -27,15 +27,21 @@ const style = {
 
 interface EditFormModalProps {
   task: TaskType | undefined;
+  isModalOpen: boolean;
+  handleIsModalOpen: () => void;
 }
 
-export default function EditFormModal({ task }: EditFormModalProps) {
-  const [open, setOpen] = useState(false);
+export default function EditFormModal({
+  task,
+  isModalOpen,
+  handleIsModalOpen,
+}: EditFormModalProps) {
   const [title, setTitle] = useState(task?.title ?? "");
-  const [description, setDescription] = useState(task?.title ?? "");
-  const [location, setLocation] = useState(task?.description ?? "");
+  const [description, setDescription] = useState(task?.description ?? "");
+  const [location, setLocation] = useState(task?.location ?? "");
   const [projectId, setProjectId] = useState(task?.projectId ?? "");
   const [priority, setPriority] = useState(task?.priority ?? "low");
+  const isCompleted = task?.isCompleted;
 
   const id = task?.id;
 
@@ -69,11 +75,10 @@ export default function EditFormModal({ task }: EditFormModalProps) {
 
   const [tags, setTags] = useState<string[]>([]);
 
-  const { addTask } = useTasks();
+  const { updateTaskById } = useTasks();
 
-  const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setOpen(false);
+    handleIsModalOpen();
     resetForm();
   };
   const resetForm = () => {
@@ -125,7 +130,7 @@ export default function EditFormModal({ task }: EditFormModalProps) {
       id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
-      isCompleted: false,
+      isCompleted: isCompleted,
       location: location,
       projectId: project,
       priority: priority,
@@ -134,7 +139,10 @@ export default function EditFormModal({ task }: EditFormModalProps) {
       tags: tags,
     };
 
-    addTask?.(newTask);
+    updateTaskById?.(task?.id ?? "", {
+      ...newTask,
+      isCompleted: newTask.isCompleted ?? false,
+    });
 
     handleClose();
   };
@@ -147,17 +155,8 @@ export default function EditFormModal({ task }: EditFormModalProps) {
 
   return (
     <div>
-      <Typography
-        onClick={(e) => {
-          handleOpen();
-          e.stopPropagation();
-        }}
-        variant="body1"
-      >
-        Edit
-      </Typography>
       <Modal
-        open={open}
+        open={isModalOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
