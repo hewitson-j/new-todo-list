@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { TaskType, Tasks } from "./Task";
 
 const TaskContext = createContext<{
@@ -16,18 +22,22 @@ export function useTasks() {
 }
 
 function TasksProvider({ children }: { children: ReactNode }) {
-  const [tasks, setTasks] = useState<Tasks>([
-    {
-      id: "353",
-      title: "test6",
-      description: "",
-      isCompleted: false,
-      location: "",
-      projectId: "Inbox",
-      priority: "low",
-      tags: [],
-    },
-  ]);
+  // Tasks is retrieved from local storage.
+  const [tasks, setTasks] = useState<Tasks>(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+
+  // Upon task addition or update, the new entry is also saved to local storage
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+  useEffect(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
+  }, []);
 
   function addTask(newTask: TaskType) {
     setTasks([...tasks, newTask]);
