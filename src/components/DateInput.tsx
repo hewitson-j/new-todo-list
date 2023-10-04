@@ -5,6 +5,9 @@ interface DateInputProps {
   month: string;
   day: string;
   year: string;
+  // monthId: string;
+  // dayId: string;
+  // yearId: string;
   onMonthChange: (value: string) => void;
   onDayChange: (value: string) => void;
   onYearChange: (value: string) => void;
@@ -15,6 +18,9 @@ export default function DateInput({
   month,
   day,
   year,
+  // monthId,
+  // dayId,
+  // yearId,
   onMonthChange,
   onDayChange,
   onYearChange,
@@ -24,7 +30,7 @@ export default function DateInput({
       <Typography variant="caption">{title}</Typography>
       <Box sx={{ display: "flex", gap: "5px" }}>
         <TextField
-          id="month"
+          // id={monthId}
           label="Month"
           type="number"
           value={month}
@@ -46,7 +52,7 @@ export default function DateInput({
           }}
         />
         <TextField
-          id="day"
+          // id={dayId}
           label="Day"
           type="number"
           value={day}
@@ -68,7 +74,7 @@ export default function DateInput({
           }}
         />
         <TextField
-          id="year"
+          // id={yearId}
           label="Year"
           type="number"
           value={year}

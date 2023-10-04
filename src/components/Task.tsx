@@ -73,8 +73,10 @@ function Task({ task }: TaskProps) {
             />
           </ListItemText>
         </ListItemButton>
-        <Tooltip title="More" arrow>
-          <TaskMenu taskId={task.id} />
+        <Tooltip title="More" placement="top" arrow>
+          <div>
+            <TaskMenu taskId={task.id} />
+          </div>
         </Tooltip>
       </ListItem>
     </div>

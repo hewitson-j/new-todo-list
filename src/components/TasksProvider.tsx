@@ -16,7 +16,18 @@ export function useTasks() {
 }
 
 function TasksProvider({ children }: { children: ReactNode }) {
-  const [tasks, setTasks] = useState<Tasks>([]);
+  const [tasks, setTasks] = useState<Tasks>([
+    {
+      id: "353",
+      title: "test6",
+      description: "",
+      isCompleted: false,
+      location: "",
+      projectId: "Inbox",
+      priority: "low",
+      tags: [],
+    },
+  ]);
 
   function addTask(newTask: TaskType) {
     setTasks([...tasks, newTask]);

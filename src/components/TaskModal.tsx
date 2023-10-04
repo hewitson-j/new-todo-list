@@ -112,9 +112,11 @@ export default function TaskModal({
               </Button>
             </div>
           </div>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {description}
-          </Typography>
+          {description && (
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Description: {description}
+            </Typography>
+          )}
           {priority && (
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Priority: {priority}
