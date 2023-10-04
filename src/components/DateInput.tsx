@@ -18,9 +18,6 @@ export default function DateInput({
   month,
   day,
   year,
-  // monthId,
-  // dayId,
-  // yearId,
   onMonthChange,
   onDayChange,
   onYearChange,
@@ -30,7 +27,6 @@ export default function DateInput({
       <Typography variant="caption">{title}</Typography>
       <Box sx={{ display: "flex", gap: "5px" }}>
         <TextField
-          // id={monthId}
           label="Month"
           type="number"
           value={month}
@@ -52,7 +48,6 @@ export default function DateInput({
           }}
         />
         <TextField
-          // id={dayId}
           label="Day"
           type="number"
           value={day}
@@ -74,7 +69,6 @@ export default function DateInput({
           }}
         />
         <TextField
-          // id={yearId}
           label="Year"
           type="number"
           value={year}

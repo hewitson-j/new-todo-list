@@ -79,21 +79,6 @@ export default function EditFormModal({
 
   const handleClose = () => {
     handleIsModalOpen();
-    resetForm();
-  };
-  const resetForm = () => {
-    setTitle("");
-    setDescription("");
-    setLocation("");
-    setProjectId("");
-    setPriority("low");
-    setDueDateMonth("");
-    setDueDateDay("");
-    setDueDateYear("");
-    setRemindDateDay("");
-    setRemindDateMonth("");
-    setRemindDateYear("");
-    setTags([]);
   };
 
   const handleTagsChange = (newTags: string[]) => {
