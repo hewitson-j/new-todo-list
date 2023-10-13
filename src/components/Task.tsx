@@ -10,6 +10,8 @@ import TaskDetailsModal from "./TaskDetailsModal";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import { useTasks } from "./TasksProvider";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CompletionNotification from "./CompletionNotification";
+import { useState } from "react";
 
 export interface TaskType {
   id: string;
@@ -33,9 +35,15 @@ interface TaskProps {
 function Task({ task }: TaskProps) {
   const { updateTaskById } = useTasks();
 
+  const [isOpen, setIsOpen] = useState(task.isCompleted);
+  const handleIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   const handleToggleCompletion = () => {
     const updatedTask = { ...task, isCompleted: !task.isCompleted };
     updateTaskById?.(updatedTask.id, updatedTask);
+    handleIsOpen();
   };
 
   return (
@@ -79,6 +87,11 @@ function Task({ task }: TaskProps) {
           </div>
         </Tooltip>
       </ListItem>
+      <CompletionNotification
+        isOpen={isOpen}
+        handleIsOpen={handleIsOpen}
+        completionMessage={task.isCompleted}
+      />
     </div>
   );
 }

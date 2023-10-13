@@ -11,8 +11,6 @@ import { useTasks } from "./TasksProvider";
 import DateInput from "./DateInput";
 import { TaskType } from "./Task";
 
-// TODO: Need to add functionality to update, right now it creates a new task without deleting or updating the new one
-
 const style = {
   position: "absolute",
   top: "50%",
