@@ -6,7 +6,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import TaskMenu from "./TaskMenu";
-import TaskModal from "./TaskModal";
+import TaskDetailsModal from "./TaskDetailsModal";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import { useTasks } from "./TasksProvider";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
@@ -59,7 +59,7 @@ function Task({ task }: TaskProps) {
             )}
           </IconButton>
           <ListItemText>
-            <TaskModal
+            <TaskDetailsModal
               id={task.id}
               title={task.title}
               description={task.description}
@@ -68,7 +68,7 @@ function Task({ task }: TaskProps) {
               location={task.location}
               tags={task.tags}
               projectId={task.projectId}
-              completion={task.isCompleted}
+              isCompleted={task.isCompleted}
               reminderDateTime={task.reminderDateTime}
             />
           </ListItemText>

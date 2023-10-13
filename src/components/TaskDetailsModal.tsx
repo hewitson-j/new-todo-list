@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-interface TaskModalProps {
+interface TaskDetailsModalProps {
   id: string;
   title: string;
   description?: string;
@@ -28,11 +28,11 @@ interface TaskModalProps {
   location?: string;
   tags?: string[];
   projectId?: string;
-  completion: boolean;
+  isCompleted: boolean;
   reminderDateTime?: Date;
 }
 
-export default function TaskModal({
+export default function TaskDetailsModal({
   id,
   title,
   description,
@@ -41,16 +41,16 @@ export default function TaskModal({
   location,
   tags,
   projectId,
-  completion,
+  isCompleted: isCompleted,
   reminderDateTime,
-}: TaskModalProps) {
-  const [open, setOpen] = React.useState(false);
+}: TaskDetailsModalProps) {
+  const [isOpen, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [completionState, setCompletionState] = useState(completion);
+  const [completionState, setCompletionState] = useState(isCompleted);
   useEffect(() => {
-    setCompletionState(completion);
-  }, [completion]);
+    setCompletionState(isCompleted);
+  }, [isCompleted]);
 
   let buttonColor = "";
   let fontWeight = "";
@@ -93,7 +93,7 @@ export default function TaskModal({
         {additionalTitleText}
       </Button>
       <Modal
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
