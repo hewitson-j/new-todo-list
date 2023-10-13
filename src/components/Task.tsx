@@ -30,9 +30,17 @@ export type Tasks = TaskType[];
 
 interface TaskProps {
   task: TaskType;
+  setNotificationInfo: (info: NotificationInfo) => void;
+  notificationInfo: NotificationInfo;
 }
 
-function Task({ task }: TaskProps) {
+interface NotificationInfo {
+  isOpen: boolean;
+  handleIsOpen: () => void;
+  isCompleted: boolean;
+}
+
+function Task({ task, setNotificationInfo, notificationInfo }: TaskProps) {
   const { updateTaskById } = useTasks();
 
   const [isOpen, setIsOpen] = useState(task.isCompleted);
@@ -43,7 +51,13 @@ function Task({ task }: TaskProps) {
   const handleToggleCompletion = () => {
     const updatedTask = { ...task, isCompleted: !task.isCompleted };
     updateTaskById?.(updatedTask.id, updatedTask);
-    handleIsOpen();
+
+    setNotificationInfo({
+      isOpen: true,
+      handleIsOpen: () =>
+        setNotificationInfo({ ...notificationInfo, isOpen: false }),
+      isCompleted: updatedTask.isCompleted,
+    });
   };
 
   return (
