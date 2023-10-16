@@ -42,36 +42,22 @@ export default function EditFormModal({
   const [projectId, setProjectId] = useState(task?.projectId ?? "");
   const [priority, setPriority] = useState(task?.priority ?? "low");
   const isCompleted = task?.isCompleted;
+  const [tags, setTags] = useState<string[]>(task?.tags || []);
 
-  const [dueDateMonth, setDueDateMonth] = useState("");
-  const [dueDateDay, setDueDateDay] = useState("");
-  const [dueDateYear, setDueDateYear] = useState("");
+  const [dueDate, setDueDate] = useState<Date | undefined>(
+    task?.dueDate || undefined
+  );
+  const [remindDate, setRemindDate] = useState<Date | undefined>(
+    task?.reminderDateTime || undefined
+  );
 
-  const handleDueDateMonthChange = (value: string) => {
-    setDueDateMonth(value);
-  };
-  const handleDueDateDayChange = (value: string) => {
-    setDueDateDay(value);
-  };
-  const handleDueDateYearChange = (value: string) => {
-    setDueDateYear(value);
+  const handleDueDateChange = (newDate: Date | undefined) => {
+    setDueDate(newDate);
   };
 
-  const [remindDateMonth, setRemindDateMonth] = useState("");
-  const [remindDateDay, setRemindDateDay] = useState("");
-  const [remindDateYear, setRemindDateYear] = useState("");
-
-  const handleRemindDateMonthChange = (value: string) => {
-    setRemindDateMonth(value);
+  const handleReminderDateChange = (newDate: Date | undefined) => {
+    setRemindDate(newDate);
   };
-  const handleRemindDateDayChange = (value: string) => {
-    setRemindDateDay(value);
-  };
-  const handleRemindDateYearChange = (value: string) => {
-    setRemindDateYear(value);
-  };
-
-  const [tags, setTags] = useState<string[]>([]);
 
   const { updateTaskById } = useTasks();
 
@@ -84,24 +70,6 @@ export default function EditFormModal({
   };
 
   const handleSave = () => {
-    let dueDate: Date | undefined = undefined;
-    if (dueDateYear && dueDateMonth && dueDateDay) {
-      dueDate = new Date(
-        parseInt(dueDateYear),
-        parseInt(dueDateMonth) - 1,
-        parseInt(dueDateDay)
-      );
-    }
-
-    let reminderDateTime: Date | undefined = undefined;
-    if (remindDateYear && remindDateMonth && remindDateDay) {
-      reminderDateTime = new Date(
-        parseInt(remindDateYear),
-        parseInt(remindDateMonth) - 1,
-        parseInt(remindDateDay)
-      );
-    }
-
     let project;
     if (projectId === "") {
       project = "Inbox";
@@ -118,7 +86,7 @@ export default function EditFormModal({
       projectId: project,
       priority: priority,
       dueDate: dueDate,
-      reminderDateTime: reminderDateTime,
+      reminderDateTime: remindDate,
       tags: tags,
     };
 
@@ -211,21 +179,13 @@ export default function EditFormModal({
           >
             <DateInput
               title="Due Date:"
-              month={dueDateMonth}
-              day={dueDateDay}
-              year={dueDateYear}
-              onMonthChange={handleDueDateMonthChange}
-              onDayChange={handleDueDateDayChange}
-              onYearChange={handleDueDateYearChange}
+              date={dueDate}
+              onDateChange={handleDueDateChange}
             />
             <DateInput
               title="Reminder Date:"
-              month={remindDateMonth}
-              day={remindDateDay}
-              year={remindDateYear}
-              onMonthChange={handleRemindDateMonthChange}
-              onDayChange={handleRemindDateDayChange}
-              onYearChange={handleRemindDateYearChange}
+              date={remindDate}
+              onDateChange={handleReminderDateChange}
             />
           </div>
           <TagManager tags={tags} onTagsChange={handleTagsChange} />

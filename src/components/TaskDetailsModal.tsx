@@ -131,22 +131,34 @@ export default function TaskDetailsModal({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Project: {projectId}
           </Typography>
-
-          {dueDate && (
+          {dueDate && dueDate instanceof Date ? (
             <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-              Due Date: {dueDate.getMonth() + 1}/{dueDate.getDate()}/
-              {dueDate.getFullYear()}
+              Due Date:{" "}
+              {`${
+                dueDate.getMonth() + 1
+              }/${dueDate.getDate()}/${dueDate.getFullYear()}`}
+            </Typography>
+          ) : (
+            <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+              Due Date: None
             </Typography>
           )}
-          {reminderDateTime && (
+
+          {reminderDateTime && reminderDateTime instanceof Date ? (
             <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-              Reminder: {reminderDateTime.getMonth() + 1}/
-              {reminderDateTime.getDay()}/{reminderDateTime.getFullYear()}
+              Reminder:{" "}
+              {`${
+                reminderDateTime.getMonth() + 1
+              }/${reminderDateTime.getDate()}/${reminderDateTime.getFullYear()}`}
+            </Typography>
+          ) : (
+            <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+              Reminder: None
             </Typography>
           )}
           {tags && (
             <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-              Tags: {tags}
+              Tags: {tags.join(", ")}
             </Typography>
           )}
         </Box>
