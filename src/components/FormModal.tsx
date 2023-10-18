@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -7,8 +6,10 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
-import DatePickerInput from "./DatePickerInput";
 import TagManager from "./TagManager";
+import { useState } from "react";
+import { useTasks } from "./TasksProvider";
+import DateInput from "./DateInput";
 
 const style = {
   position: "absolute",
@@ -22,16 +23,73 @@ const style = {
   p: 4,
 };
 
+// TODO: Add event handler to add new task to tasks
 export default function FormModal() {
-  const [open, setOpen] = React.useState(false);
+  const { addTask } = useTasks();
+
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [projectId, setProjectId] = useState("");
+  const [priority, setPriority] = useState("low");
+  const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
+  const [remindDate, setRemindDate] = useState<Date | undefined>(undefined);
+  const [tags, setTags] = useState<string[]>([]);
+  const isSaveDisabled = title.trim() === "";
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    resetForm();
+  };
+
+  const handlePriorityChange = (newPriority: string) => {
+    setPriority(newPriority);
+  };
+  const handleTagsChange = (newTags: string[]) => {
+    setTags(newTags);
+  };
+  const handleDueDateChange = (newDate: Date | undefined) => {
+    setDueDate(newDate);
+  };
+  const handleReminderDateChange = (newDate: Date | undefined) => {
+    setRemindDate(newDate);
+  };
+  const handleSave = () => {
+    const newTask = {
+      id: Math.round(Math.random() * 1000).toString(),
+      title: title,
+      description: description,
+      isCompleted: false,
+      location: location,
+      projectId: projectId || "Inbox",
+      priority: priority,
+      dueDate: dueDate,
+      reminderDateTime: remindDate,
+      tags: tags,
+    };
+
+    addTask?.(newTask);
+
+    handleClose();
+  };
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setProjectId("");
+    setPriority("low");
+    setTags([]);
+    setDueDate(undefined);
+    setRemindDate(undefined);
+  };
 
   return (
     <div>
       <Button onClick={handleOpen} variant="contained">
         <AddIcon />
-        Add Item
+        Add Task
       </Button>
       <Modal
         open={open}
@@ -47,7 +105,7 @@ export default function FormModal() {
               component="h2"
               sx={{ mb: 2 }}
             >
-              Add/Edit Item
+              Add/Edit Task
             </Typography>
             <Button onClick={handleClose}>
               <CloseIcon />
@@ -59,28 +117,40 @@ export default function FormModal() {
             label="Title"
             fullWidth
             sx={{ margin: "1rem 0" }}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             id="description"
             multiline
-            maxRows={4}
             rows={4}
             fullWidth
             label="Description"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
           />
           <TextField
             id="location"
             label="Location"
             sx={{ margin: "1rem 0" }}
             fullWidth
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
           />
           <TextField
             id="projectId"
             label="Project"
             sx={{ margin: "1rem 0" }}
             fullWidth
+            onChange={(e) => {
+              setProjectId(e.target.value);
+            }}
           />
-          <PrioritySelect />
+          <PrioritySelect
+            priority={priority}
+            onPriorityChange={handlePriorityChange}
+          />
           <div
             style={{
               margin: "1rem 0",
@@ -88,13 +158,18 @@ export default function FormModal() {
               justifyContent: "space-evenly",
             }}
           >
-            <DatePickerInput id="due-date" label="Due Date" />
-            <DatePickerInput id="reminder" label="Reminder" />
+            <DateInput
+              title="Due Date:"
+              date={dueDate}
+              onDateChange={handleDueDateChange}
+            />
+            <DateInput
+              title="Reminder Date:"
+              date={remindDate}
+              onDateChange={handleReminderDateChange}
+            />
           </div>
-          <TagManager />
-          {/* Create input
-          when user blurs or clicks on add, then append new tag to end of tags array
-          once they click on submit, it goes into permanent state */}
+          <TagManager tags={tags} onTagsChange={handleTagsChange} />
           <div
             style={{
               display: "flex",
@@ -102,7 +177,11 @@ export default function FormModal() {
               margin: "1rem",
             }}
           >
-            <Button variant="contained" disabled>
+            <Button
+              variant="contained"
+              disabled={isSaveDisabled}
+              onClick={handleSave}
+            >
               Save
             </Button>
             <Button variant="outlined" onClick={handleClose}>
