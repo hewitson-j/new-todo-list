@@ -7,7 +7,7 @@ import FormModal from "./FormModal";
 import { useTasks } from "./TasksProvider";
 
 export default function Navbar() {
-  const { completedTasks } = useTasks();
+  const { completedTasksCount } = useTasks();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -18,7 +18,7 @@ export default function Navbar() {
           </Typography>
           <FormModal />
           <TaskAltIcon color="inherit" />
-          <Typography>{completedTasks} Completed</Typography>
+          <Typography>{completedTasksCount} Completed</Typography>
         </Toolbar>
       </AppBar>
     </Box>

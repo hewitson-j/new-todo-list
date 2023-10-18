@@ -17,7 +17,7 @@ const TaskContext = createContext<{
   removeTaskById?: (taskId: TaskType["id"]) => void;
   updateTaskById?: (taskId: TaskType["id"], updatedTask: TaskType) => void;
   findTaskById?: (taskId: TaskType["id"]) => TaskType | undefined;
-  completedTasks?: number;
+  completedTasksCount?: number;
   showCompletedTasks: boolean;
   toggleShowCompletedTasks?: () => void;
 }>(defaultState);
@@ -86,7 +86,7 @@ function TasksProvider({ children }: { children: ReactNode }) {
         addTask,
         removeTaskById,
         updateTaskById,
-        completedTasks: completedTasksCount,
+        completedTasksCount,
         findTaskById,
         showCompletedTasks,
         toggleShowCompletedTasks,
