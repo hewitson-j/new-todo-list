@@ -4,10 +4,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import FormModal from "./FormModal";
-// import { useState } from "react";
+import { useTasks } from "./TasksProvider";
 
 export default function Navbar() {
-  // const [completed, setCompleted] = useState(0);
+  const { completedTasksCount } = useTasks();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -18,7 +18,7 @@ export default function Navbar() {
           </Typography>
           <FormModal />
           <TaskAltIcon color="inherit" />
-          <Typography>0 Completed</Typography>
+          <Typography>{completedTasksCount} Completed</Typography>
         </Toolbar>
       </AppBar>
     </Box>

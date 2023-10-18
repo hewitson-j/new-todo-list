@@ -4,10 +4,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { useTasks } from "./TasksProvider";
+import EditFormModal from "./EditFormModal";
+import { useState } from "react";
 
-export default function ItemMenu() {
+interface TaskMenuProps {
+  taskId: string;
+}
+
+export default function TaskMenu({ taskId }: TaskMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,6 +23,14 @@ export default function ItemMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const { removeTaskById, findTaskById } = useTasks();
 
   return (
     <div>
@@ -37,15 +52,32 @@ export default function ItemMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            handleModalOpen();
+          }}
+        >
           <EditIcon />
           Edit
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            removeTaskById?.(taskId);
+            handleClose();
+          }}
+        >
           <DeleteIcon />
           Delete
         </MenuItem>
       </Menu>
+
+      {/* Modal goes here */}
+      <EditFormModal
+        isModalOpen={isModalOpen}
+        handleIsModalOpen={handleModalOpen}
+        task={findTaskById?.(taskId)}
+      />
     </div>
   );
 }

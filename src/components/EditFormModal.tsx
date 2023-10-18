@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { TextField } from "@mui/material";
 import PrioritySelect from "./PrioritySelect";
@@ -10,6 +9,10 @@ import TagManager from "./TagManager";
 import { useState } from "react";
 import { useTasks } from "./TasksProvider";
 import DateInput from "./DateInput";
+import { TaskType } from "./Task";
+
+
+// TODO: Need to add functionality to update, right now it creates a new task without deleting or updating the new one
 
 const style = {
   position: "absolute",
@@ -23,45 +26,56 @@ const style = {
   p: 4,
 };
 
-// TODO: Add event handler to add new task to tasks
-export default function FormModal() {
-  const { addTask } = useTasks();
+interface EditFormModalProps {
+  task: TaskType | undefined;
+  isModalOpen: boolean;
+  handleIsModalOpen: () => void;
+}
 
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [projectId, setProjectId] = useState("");
-  const [priority, setPriority] = useState("low");
-  const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
-  const [remindDate, setRemindDate] = useState<Date | undefined>(undefined);
-  const [tags, setTags] = useState<string[]>([]);
-  const isSaveDisabled = title.trim() === "";
+export default function EditFormModal({
+  task,
+  isModalOpen,
+  handleIsModalOpen,
+}: EditFormModalProps) {
+  const { updateTaskById } = useTasks();
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    resetForm();
-  };
+  const [title, setTitle] = useState(task?.title ?? "");
+  const [description, setDescription] = useState(task?.description ?? "");
+  const [location, setLocation] = useState(task?.location ?? "");
+  const [projectId, setProjectId] = useState(task?.projectId ?? "");
+  const [priority, setPriority] = useState(task?.priority ?? "low");
+  const isCompleted = task?.isCompleted;
+  const [tags, setTags] = useState<string[]>(task?.tags || []);
+  const [dueDate, setDueDate] = useState<Date | undefined>(
+    task?.dueDate || undefined
+  );
+  const [remindDate, setRemindDate] = useState<Date | undefined>(
+    task?.reminderDateTime || undefined
+  );
+  const isUpdateDisabled = title.trim() === "";
 
-  const handlePriorityChange = (newPriority: string) => {
-    setPriority(newPriority);
-  };
-  const handleTagsChange = (newTags: string[]) => {
-    setTags(newTags);
-  };
   const handleDueDateChange = (newDate: Date | undefined) => {
     setDueDate(newDate);
   };
   const handleReminderDateChange = (newDate: Date | undefined) => {
     setRemindDate(newDate);
   };
+  const handleClose = () => {
+    handleIsModalOpen();
+  };
+  const handleTagsChange = (newTags: string[]) => {
+    setTags(newTags);
+  };
+  const handlePriorityChange = (newPriority: string) => {
+    setPriority(newPriority);
+  };
+
   const handleSave = () => {
     const newTask = {
       id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
-      isCompleted: false,
+      isCompleted: isCompleted,
       location: location,
       projectId: projectId || "Inbox",
       priority: priority,
@@ -70,29 +84,18 @@ export default function FormModal() {
       tags: tags,
     };
 
-    addTask?.(newTask);
+    updateTaskById?.(task?.id ?? "", {
+      ...newTask,
+      isCompleted: newTask.isCompleted ?? false,
+    });
 
     handleClose();
-  };
-  const resetForm = () => {
-    setTitle("");
-    setDescription("");
-    setLocation("");
-    setProjectId("");
-    setPriority("low");
-    setTags([]);
-    setDueDate(undefined);
-    setRemindDate(undefined);
   };
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained">
-        <AddIcon />
-        Add Task
-      </Button>
       <Modal
-        open={open}
+        open={isModalOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -105,7 +108,7 @@ export default function FormModal() {
               component="h2"
               sx={{ mb: 2 }}
             >
-              Add/Edit Task
+              Edit Task
             </Typography>
             <Button onClick={handleClose}>
               <CloseIcon />
@@ -118,6 +121,7 @@ export default function FormModal() {
             fullWidth
             sx={{ margin: "1rem 0" }}
             onChange={(e) => setTitle(e.target.value)}
+            value={title}
           />
           <TextField
             id="description"
@@ -125,6 +129,7 @@ export default function FormModal() {
             rows={4}
             fullWidth
             label="Description"
+            value={description}
             onChange={(e) => {
               setDescription(e.target.value);
             }}
@@ -134,6 +139,7 @@ export default function FormModal() {
             label="Location"
             sx={{ margin: "1rem 0" }}
             fullWidth
+            value={location}
             onChange={(e) => {
               setLocation(e.target.value);
             }}
@@ -143,6 +149,7 @@ export default function FormModal() {
             label="Project"
             sx={{ margin: "1rem 0" }}
             fullWidth
+            value={projectId}
             onChange={(e) => {
               setProjectId(e.target.value);
             }}
@@ -179,10 +186,10 @@ export default function FormModal() {
           >
             <Button
               variant="contained"
-              disabled={isSaveDisabled}
+              disabled={isUpdateDisabled}
               onClick={handleSave}
             >
-              Save
+              Update
             </Button>
             <Button variant="outlined" onClick={handleClose}>
               Cancel
