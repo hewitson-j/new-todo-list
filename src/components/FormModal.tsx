@@ -25,62 +25,45 @@ const style = {
 
 // TODO: Add event handler to add new task to tasks
 export default function FormModal() {
+  const { addTask } = useTasks();
+
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [projectId, setProjectId] = useState("");
   const [priority, setPriority] = useState("low");
-
   const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
   const [remindDate, setRemindDate] = useState<Date | undefined>(undefined);
-
   const [tags, setTags] = useState<string[]>([]);
-
-  const { addTask } = useTasks();
+  const isSaveDisabled = title.trim() === "";
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
     resetForm();
   };
-  const resetForm = () => {
-    setTitle("");
-    setDescription("");
-    setLocation("");
-    setProjectId("");
-    setPriority("low");
-    setTags([]);
-    setDueDate(undefined);
-    setRemindDate(undefined);
-  };
 
+  const handlePriorityChange = (newPriority: string) => {
+    setPriority(newPriority);
+  };
   const handleTagsChange = (newTags: string[]) => {
     setTags(newTags);
   };
   const handleDueDateChange = (newDate: Date | undefined) => {
     setDueDate(newDate);
   };
-
   const handleReminderDateChange = (newDate: Date | undefined) => {
     setRemindDate(newDate);
   };
-
   const handleSave = () => {
-    let project;
-    if (projectId === "") {
-      project = "Inbox";
-    } else {
-      project = projectId;
-    }
-
     const newTask = {
       id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
       isCompleted: false,
       location: location,
-      projectId: project,
+      projectId: projectId || "Inbox",
       priority: priority,
       dueDate: dueDate,
       reminderDateTime: remindDate,
@@ -91,11 +74,15 @@ export default function FormModal() {
 
     handleClose();
   };
-
-  const isSaveDisabled = title.trim() === "";
-
-  const handlePriorityChange = (newPriority: string) => {
-    setPriority(newPriority);
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setProjectId("");
+    setPriority("low");
+    setTags([]);
+    setDueDate(undefined);
+    setRemindDate(undefined);
   };
 
   return (

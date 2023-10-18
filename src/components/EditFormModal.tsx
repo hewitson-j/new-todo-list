@@ -36,6 +36,8 @@ export default function EditFormModal({
   isModalOpen,
   handleIsModalOpen,
 }: EditFormModalProps) {
+  const { updateTaskById } = useTasks();
+
   const [title, setTitle] = useState(task?.title ?? "");
   const [description, setDescription] = useState(task?.description ?? "");
   const [location, setLocation] = useState(task?.location ?? "");
@@ -43,47 +45,38 @@ export default function EditFormModal({
   const [priority, setPriority] = useState(task?.priority ?? "low");
   const isCompleted = task?.isCompleted;
   const [tags, setTags] = useState<string[]>(task?.tags || []);
-
   const [dueDate, setDueDate] = useState<Date | undefined>(
     task?.dueDate || undefined
   );
   const [remindDate, setRemindDate] = useState<Date | undefined>(
     task?.reminderDateTime || undefined
   );
+  const isUpdateDisabled = title.trim() === "";
 
   const handleDueDateChange = (newDate: Date | undefined) => {
     setDueDate(newDate);
   };
-
   const handleReminderDateChange = (newDate: Date | undefined) => {
     setRemindDate(newDate);
   };
-
-  const { updateTaskById } = useTasks();
-
   const handleClose = () => {
     handleIsModalOpen();
   };
-
   const handleTagsChange = (newTags: string[]) => {
     setTags(newTags);
   };
+  const handlePriorityChange = (newPriority: string) => {
+    setPriority(newPriority);
+  };
 
   const handleSave = () => {
-    let project;
-    if (projectId === "") {
-      project = "Inbox";
-    } else {
-      project = projectId;
-    }
-
     const newTask = {
       id: Math.round(Math.random() * 1000).toString(),
       title: title,
       description: description,
       isCompleted: isCompleted,
       location: location,
-      projectId: project,
+      projectId: projectId || "Inbox",
       priority: priority,
       dueDate: dueDate,
       reminderDateTime: remindDate,
@@ -96,12 +89,6 @@ export default function EditFormModal({
     });
 
     handleClose();
-  };
-
-  const isUpdateDisabled = title.trim() === "";
-
-  const handlePriorityChange = (newPriority: string) => {
-    setPriority(newPriority);
   };
 
   return (
