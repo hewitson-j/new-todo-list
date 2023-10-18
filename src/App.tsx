@@ -1,14 +1,11 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import AppHeader from "./components/AppHeader";
 import Tasks from "./components/Tasks";
-import { useState } from "react";
+import ToggleShowCompleted from "./components/ToggleShowCompleted";
+import { useTasks } from "./components/TasksProvider";
 
 function App() {
-  const [showCompletedTasks, setShowCompletedTasks] = useState(false);
-
-  const handleToggleCompletedTasks = () => {
-    setShowCompletedTasks(!showCompletedTasks);
-  };
+  const { showCompletedTasks } = useTasks();
 
   return (
     <>
@@ -17,11 +14,7 @@ function App() {
         <br></br>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h4">Task List:</Typography>
-          <Button variant="outlined" onClick={handleToggleCompletedTasks}>
-            {showCompletedTasks
-              ? "Hide Completed Tasks"
-              : "Show Completed Tasks"}
-          </Button>
+          <ToggleShowCompleted />
         </div>
         <Tasks showCompletedTasks={showCompletedTasks} />
       </Container>

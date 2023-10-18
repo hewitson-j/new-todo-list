@@ -7,6 +7,10 @@ import {
 } from "react";
 import { TaskType, Tasks } from "./Task";
 
+const defaultState = {
+  showCompletedTasks: false,
+};
+
 const TaskContext = createContext<{
   tasks?: Tasks;
   addTask?: (newTask: TaskType) => void;
@@ -14,7 +18,9 @@ const TaskContext = createContext<{
   updateTaskById?: (taskId: TaskType["id"], updatedTask: TaskType) => void;
   findTaskById?: (taskId: TaskType["id"]) => TaskType | undefined;
   completedTasks?: number;
-}>({});
+  showCompletedTasks: boolean;
+  toggleShowCompletedTasks?: () => void;
+}>(defaultState);
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useTasks() {
@@ -22,6 +28,8 @@ export function useTasks() {
 }
 
 function TasksProvider({ children }: { children: ReactNode }) {
+  const [showCompletedTasks, setShowCompletedTasks] = useState(false);
+
   // Tasks is retrieved from local storage.
   const [tasks, setTasks] = useState<Tasks>(() => {
     const savedTasks = localStorage.getItem("tasks");
@@ -67,6 +75,10 @@ function TasksProvider({ children }: { children: ReactNode }) {
     setTasks(updatedTasks);
   }
 
+  function toggleShowCompletedTasks() {
+    setShowCompletedTasks(!showCompletedTasks);
+  }
+
   return (
     <TaskContext.Provider
       value={{
@@ -76,6 +88,8 @@ function TasksProvider({ children }: { children: ReactNode }) {
         updateTaskById,
         completedTasks: completedTasksCount,
         findTaskById,
+        showCompletedTasks,
+        toggleShowCompletedTasks,
       }}
     >
       {children}
