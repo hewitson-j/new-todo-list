@@ -2,10 +2,10 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import TaskMenu from "./TaskMenu";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
+import TaskMenu from "./TaskMenu";
 
 const style = {
   position: "absolute",
