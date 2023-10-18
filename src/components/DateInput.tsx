@@ -25,7 +25,7 @@ export default function DateInput({
   const [day, setDay] = useState(isDateValid ? date.getDate() : undefined);
 
   const updateDate = () => {
-    if (year !== undefined && month !== undefined && day !== undefined) {
+    if (year && month && day) {
       const updatedDate = new Date(year, month - 1, day);
       onDateChange(updatedDate);
     } else {
