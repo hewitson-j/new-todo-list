@@ -11,8 +11,13 @@ function App() {
     <>
       <AppHeader />
       <Container>
-        <br></br>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "1rem 0 0",
+          }}
+        >
           <Typography variant="h4">Task List:</Typography>
           <ToggleShowCompleted />
         </div>
