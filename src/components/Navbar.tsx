@@ -14,7 +14,7 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            To-Do List
+            New To-Do List
           </Typography>
           <FormModal />
           <TaskAltIcon color="inherit" />

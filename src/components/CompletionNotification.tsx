@@ -19,6 +19,7 @@ export default function CompletionNotification({
     reason?: string
   ) => {
     if (reason === "clickaway") {
+      console.log(event);
       return;
     }
 
